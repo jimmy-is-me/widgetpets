@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#111827">
   <title>免費網站互動寵物產生器｜柴犬、貓咪桌面寵物與網站嵌入工具｜WidgetPets</title>
   <meta name="description" content="免費使用 WidgetPets 網站互動寵物製作器，自訂柴犬、貓咪等可愛像素寵物，支援走路、睡覺、跳躍、點擊互動、拖曳移動與手機版顯示，即時預覽並產生 HTML／JavaScript 嵌入程式碼，讓你的網站擁有會動的互動寵物。">
   <link rel="canonical" href="https://widgetpets.wumetax.com/">
@@ -50,11 +51,12 @@
 
   <style>
     :root {
+      --topbar-height: 72px;
       --nav-bg: #111827;
       --primary: #3B82F6;
       --primary-hover: #2563EB;
       --primary-light: #EFF6FF;
-      --bg-main: #F3F4F6;
+      --bg-main: #FFFFFF;
       --card-bg: #FFFFFF;
       --border: #E5E7EB;
       --text-main: #111827;
@@ -63,7 +65,9 @@
       --success: #10B981;
       --danger: #EF4444;
       --warning: #F59E0B;
-      --radius: 8px;
+      --radius: 6px;
+      --soft: #F9FAFB;
+      --line-strong: #D1D5DB;
       --font-sans: 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
@@ -85,7 +89,7 @@
     .top-navbar {
       background-color: var(--nav-bg);
       color: #FFFFFF;
-      height: 58px;
+      min-height: var(--topbar-height);
       padding: 0 20px;
       display: flex;
       align-items: center;
@@ -93,7 +97,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      border-bottom: 1px solid #1F2937;
+      border-bottom: 4px solid var(--primary);
     }
 
     .brand-group {
@@ -111,21 +115,30 @@
     }
 
     .brand-badge {
-      background: #1F2937;
-      color: #93C5FD;
+      align-self: flex-start;
+      background: #F59E0B;
+      color: #111827;
       font-size: 11px;
       font-weight: 600;
       padding: 2px 8px;
       border-radius: 4px;
-      border: 1px solid #374151;
       letter-spacing: 0.5px;
     }
 
-    .brand-title {
-      font-size: 16px;
-      font-weight: 600;
-      letter-spacing: 0.2px;
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      flex: 0 0 auto;
+      background: var(--primary);
+      border-radius: var(--radius);
+      color: #fff;
     }
+
+    .brand-copy { display: grid; line-height: 1.2; }
+    .brand-title { font-size: 22px; font-weight: 700; letter-spacing: -0.025em; }
+    .brand-copy small { color: #D1D5DB; font-size: 11px; margin-top: 4px; }
 
     .nav-actions {
       display: flex;
@@ -133,26 +146,9 @@
       gap: 10px;
     }
 
-    .nav-link {
-      color: #D1D5DB;
-      text-decoration: none;
-      font-size: 13px;
-      padding: 6px 10px;
-      border-radius: 6px;
-      transition: background 0.15s, color 0.15s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .nav-link:hover {
-      background: #1F2937;
-      color: #FFFFFF;
-    }
-
     /* Project Bar */
     .project-bar {
-      background: var(--card-bg);
+      background: var(--soft);
       border-bottom: 1px solid var(--border);
       padding: 10px 20px;
       display: flex;
@@ -161,6 +157,16 @@
       flex-wrap: wrap;
       gap: 12px;
     }
+
+    .project-tools-toggle { display: none; }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      clip-path: inset(50%);
+      overflow: hidden;
+    }
+    .btn:has(.visually-hidden:focus-visible) { outline: 3px solid #D97706; outline-offset: 2px; }
 
     .project-selector-group {
       display: flex;
@@ -190,8 +196,8 @@
       font-weight: 500;
       font-family: inherit;
       border-radius: 6px;
-      border: 1px solid var(--border);
-      background: var(--card-bg);
+      border: 1px solid var(--line-strong);
+      background: #F3F4F6;
       color: var(--text-main);
       cursor: pointer;
       transition: all 0.15s ease;
@@ -200,8 +206,8 @@
     }
 
     .btn:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: #E5E7EB;
+      border-color: #9CA3AF;
     }
 
     .btn:active {
@@ -209,14 +215,14 @@
     }
 
     .btn-primary {
-      background: var(--primary);
-      border-color: var(--primary);
+      background: var(--primary-hover);
+      border-color: var(--primary-hover);
       color: #FFFFFF;
     }
 
     .btn-primary:hover {
-      background: var(--primary-hover);
-      border-color: var(--primary-hover);
+      background: #1D4ED8;
+      border-color: #1D4ED8;
     }
 
     .btn-danger {
@@ -289,7 +295,7 @@
     /* Main 3-Column Workstation Grid */
     .workstation-grid {
       display: grid;
-      grid-template-columns: 350px 1fr 330px;
+      grid-template-columns: 320px minmax(0, 1fr) 310px;
       gap: 16px;
       padding: 16px 20px;
       min-height: calc(100vh - 120px);
@@ -305,7 +311,7 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+      min-width: 0;
     }
 
     .panel-header {
@@ -427,7 +433,7 @@
     .species-card.active {
       border-color: var(--primary);
       background: var(--primary-light);
-      box-shadow: 0 0 0 1px var(--primary);
+      color: #1D4ED8;
     }
 
     .species-name {
@@ -616,22 +622,22 @@
     }
 
     .preview-stage-wrapper {
-      background: #E5E7EB;
-      padding: 20px;
+      background: #F3F4F6;
+      padding: 12px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      min-height: 640px;
-      overflow-x: auto;
+      min-width: 0;
     }
 
     .simulated-browser {
       width: 100%;
-      height: 600px;
+      height: clamp(400px, calc(100dvh - 415px), 600px);
       background: #FFFFFF;
-      border-radius: 10px;
-      border: 1px solid #CBD5E1;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+      min-width: 0;
+      max-width: 100%;
+      border-radius: var(--radius);
+      border: 1px solid var(--line-strong);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -641,8 +647,8 @@
 
     .browser-chrome {
       height: 36px;
-      background: #F1F5F9;
-      border-bottom: 1px solid #E2E8F0;
+      background: var(--soft);
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       padding: 0 12px;
@@ -735,7 +741,7 @@
 
     .mock-hero {
       padding: 36px 24px;
-      background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%);
+      background: #EFF6FF;
       border-bottom: 1px solid #E2E8F0;
     }
 
@@ -915,7 +921,7 @@
 
     .docs-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
       gap: 20px;
     }
 
@@ -932,12 +938,12 @@
 
     /* Site Footer */
     .site-footer {
-      background: #FFFFFF;
-      border-top: 1px solid var(--border);
+      background: var(--nav-bg);
+      border-top: 4px solid var(--primary);
       padding: 28px 20px;
       text-align: center;
       font-size: 13px;
-      color: var(--text-sub);
+      color: #E5E7EB;
     }
 
     .footer-links {
@@ -945,10 +951,11 @@
       justify-content: center;
       gap: 16px;
       margin-top: 8px;
+      flex-wrap: wrap;
     }
 
     .footer-links a {
-      color: var(--primary);
+      color: #BFDBFE;
       text-decoration: none;
       font-weight: 500;
     }
@@ -983,7 +990,7 @@
     /* Responsive RWD */
     @media (max-width: 1180px) {
       .workstation-grid {
-        grid-template-columns: 320px 1fr;
+        grid-template-columns: 300px minmax(0, 1fr);
       }
       .panel-right {
         grid-column: 1 / -1;
@@ -994,11 +1001,11 @@
       .mobile-workspace-nav {
         display: flex;
         position: sticky;
-        top: 58px;
+        top: var(--topbar-height);
         z-index: 95;
       }
       .workstation-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         padding: 12px;
       }
       .config-body {
@@ -1018,11 +1025,107 @@
       }
       .preview-stage-wrapper {
         padding: 8px;
-        min-height: 480px;
       }
       .simulated-browser {
-        height: 480px;
+        height: 300px;
       }
+    }
+    #docs-guide, #wordpress-guide { scroll-margin-top: calc(var(--topbar-height) + 50px); }
+    .nav-actions .btn { min-height: 38px; }
+    .local-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 10px;
+      border: 1px solid #374151;
+      border-radius: var(--radius);
+      color: #E5E7EB;
+      background: #1F2937;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .local-chip .status-dot { background: #34D399; }
+    .guide-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 16px;
+      padding: 9px 20px;
+      background: var(--primary-hover);
+      color: #fff;
+      font-size: 13px;
+    }
+    .guide-strip strong {
+      padding: 3px 8px;
+      border-radius: 5px;
+      background: var(--nav-bg);
+    }
+    .guide-strip a { color: inherit; margin-inline-start: auto; }
+    .panel-kicker {
+      color: #1D4ED8;
+      font: 700 10px/1.3 ui-monospace, monospace;
+      letter-spacing: 0.09em;
+      margin-bottom: 3px;
+    }
+    .preview-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .preview-actions .btn { min-height: 36px; }
+    .preview-feedback {
+      flex: 1 1 100%;
+      font-size: 13px;
+      color: var(--text-sub);
+      overflow-wrap: anywhere;
+    }
+    .mock-site-scroll { container-type: inline-size; }
+    .mock-hero h2 { font-size: clamp(22px, 5cqi, 36px); overflow-wrap: anywhere; }
+    .mock-nav { flex-wrap: wrap; gap: 6px 16px; }
+    .mock-nav-links { flex-wrap: wrap; gap: 6px 12px; }
+    .browser-dot:nth-child(1) { background: #EF776F; }
+    .browser-dot:nth-child(2) { background: #EFC95D; }
+    .browser-dot:nth-child(3) { background: #64C67D; }
+    .status-pill { border-radius: var(--radius); }
+    :where(button, a, input, select, textarea):focus-visible {
+      outline: 3px solid #D97706;
+      outline-offset: 2px;
+    }
+    .config-tab:focus-visible, .species-card:focus-visible { outline-offset: -3px; }
+    @container (max-width: 440px) {
+      .mock-nav, .mock-hero, .mock-section { padding-inline: 16px; }
+      .mock-hero { padding-block: 24px; }
+    }
+    @media (max-width: 860px) {
+      :root { --topbar-height: 64px; }
+      .top-navbar { padding-inline: 12px; gap: 8px; }
+      .brand-group, .brand-logo { gap: 6px; }
+      .brand-mark { width: 36px; height: 36px; }
+      .brand-title { font-size: 16px; }
+      .nav-actions { gap: 4px; }
+      .nav-actions .local-chip { display: none; }
+      .nav-actions .btn { padding-inline: 8px; font-size: 12px; }
+      .project-bar { padding: 6px 12px; gap: 8px; }
+      .project-tools-toggle { display: inline-flex; }
+      .project-bar[data-expanded="false"] .project-selector-group { display: none; }
+      .preview-toolbar { padding: 8px 12px; }
+      .vp-btn { padding-inline: 7px; }
+      .guide-strip { padding-inline: 12px; gap: 4px 8px; }
+      .guide-strip a { margin-inline-start: 0; }
+      .btn-sm { min-height: 36px; }
+    }
+    @media (max-width: 440px) {
+      .brand-badge, .nav-actions .btn-primary, .guide-strip > span { display: none; }
+      .guide-strip { justify-content: space-between; }
+      .config-tabs { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+      .project-selector-group, .project-selector-group select { max-width: 100%; }
+      .export-group > div { flex-wrap: wrap; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
     }
   </style>
 </head>
@@ -1032,27 +1135,27 @@
   <header class="top-navbar">
     <div class="brand-group">
       <a href="https://widgetpets.wumetax.com/" class="brand-logo">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <span class="brand-mark"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .08.703 1.725 1.722 3.656 1 1.261-.472 1.96-1.45 2.344-2.5"/>
           <path d="M14.267 5.172c0-1.39 1.577-2.493 3.5-2.172 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/>
           <path d="M8 14v.5"/><path d="M16 14v.5"/>
           <path d="M11.25 16.25h1.5L12 17l-.75-.75Z"/>
           <path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444c0-1.061-.162-2.2-.493-3.309m-9.243-6.082A8.801 8.801 0 0 1 12 5c.78 0 1.5.108 2.161.306"/>
-        </svg>
-        <span class="brand-title">WUMETAX WidgetPets</span>
+        </svg></span>
+        <span class="brand-copy"><strong class="brand-title">WUMETAX WidgetPets</strong><small>網站互動寵物工作站</small></span>
       </a>
-      <span class="brand-badge">WUMETAX Lab</span>
+      <span class="brand-badge">LAB</span>
     </div>
     <nav class="nav-actions" aria-label="主要導覽">
-      <a href="#docs-guide" class="nav-link">使用教學</a>
-      <a href="#wordpress-guide" class="nav-link">WordPress 嵌入</a>
-      <a href="https://wumetax.com/lab/" target="_blank" rel="noopener" class="nav-link">更多免費工具</a>
-      <a href="https://wumetax.com/" target="_blank" rel="noopener" class="nav-link">WUMETAX 官網</a>
+      <span class="local-chip"><span class="status-dot" aria-hidden="true"></span>設定存於此瀏覽器</span>
+      <a href="#docs-guide" class="btn">使用說明</a>
+      <a href="https://wumetax.com/" target="_blank" rel="noopener" class="btn btn-primary">WUMETAX</a>
     </nav>
   </header>
 
   <!-- Project Storage Manager Bar -->
-  <section class="project-bar" aria-label="本機專案管理">
+  <section class="project-bar" id="projectBar" data-expanded="false" aria-label="本機專案管理">
+    <button type="button" class="btn btn-sm project-tools-toggle" aria-expanded="false">專案管理 ▾</button>
     <div class="project-selector-group">
       <span class="project-label">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
@@ -1070,10 +1173,16 @@
       <button type="button" id="btnExportJson" class="btn btn-sm">匯出 JSON</button>
       <label class="btn btn-sm" style="cursor:pointer;">
         匯入 JSON
-        <input type="file" id="inputImportJson" accept=".json,application/json" style="display:none;">
+        <input type="file" id="inputImportJson" accept=".json,application/json" class="visually-hidden">
       </label>
     </div>
   </section>
+
+  <div class="guide-strip">
+    <strong>快速上手</strong>
+    <span>① 選擇寵物</span><span>② 試玩互動</span><span>③ 匯出嵌入碼</span>
+    <a href="#wordpress-guide">WordPress 嵌入教學</a>
+  </div>
 
   <!-- Mobile RWD Quick Switcher -->
   <div class="mobile-workspace-nav" role="tablist" aria-label="手機版工作區切換">
@@ -1130,21 +1239,21 @@
           <div class="form-group">
             <label class="form-label">選擇原創寵物種類</label>
             <div class="species-cards">
-              <div class="species-card active" data-species="shiba">
+              <button type="button" class="species-card active" data-species="shiba">
                 <canvas id="thumb-shiba" width="48" height="48"></canvas>
                 <div class="species-name">柴犬</div>
                 <div class="species-tag">預設：咖呲</div>
-              </div>
-              <div class="species-card" data-species="cat">
+              </button>
+              <button type="button" class="species-card" data-species="cat">
                 <canvas id="thumb-cat" width="48" height="48"></canvas>
                 <div class="species-name">橘貓</div>
                 <div class="species-tag">伸懶腰/喵叫</div>
-              </div>
-              <div class="species-card" data-species="rabbit">
+              </button>
+              <button type="button" class="species-card" data-species="rabbit">
                 <canvas id="thumb-rabbit" width="48" height="48"></canvas>
                 <div class="species-name">小兔子</div>
                 <div class="species-tag">長耳跳跳</div>
-              </div>
+              </button>
             </div>
           </div>
 
@@ -1422,18 +1531,28 @@
 
     <!-- CENTER PANEL: Real Interactive Website Preview -->
     <section class="panel-card panel-center" aria-label="即時互動網站預覽區">
+      <div class="panel-header">
+        <div><div class="panel-kicker">LIVE PREVIEW</div><h2 class="panel-title">寵物互動預覽</h2></div>
+        <div class="status-pill" id="liveStateBadge">
+          <span class="status-dot" aria-hidden="true"></span>
+          <strong id="lblCurrentState">待機呼吸</strong>
+        </div>
+      </div>
       <div class="preview-toolbar">
         <div class="viewport-group" role="group" aria-label="切換預覽裝置尺寸">
           <button type="button" class="vp-btn" data-vp-width="360" data-vp-height="600">手機直向 360px</button>
           <button type="button" class="vp-btn" data-vp-width="390" data-vp-height="620">手機 390px</button>
           <button type="button" class="vp-btn" data-vp-width="640" data-vp-height="360">手機橫向</button>
           <button type="button" class="vp-btn" data-vp-width="768" data-vp-height="600">平板 768px</button>
-          <button type="button" class="vp-btn active" data-vp-width="100%" data-vp-height="600">桌面 1440px+</button>
+          <button type="button" class="vp-btn active" data-vp-width="100%" data-vp-height="auto">自適應</button>
         </div>
-        <div class="status-pill" id="liveStateBadge">
-          <span class="status-dot"></span>
-          <span>目前狀態：<strong id="lblCurrentState">Idle (待機)</strong></span>
-        </div>
+      </div>
+      <div class="preview-actions" role="group" aria-label="試玩寵物互動">
+        <button type="button" class="btn btn-primary" data-preview-action="pet">摸摸</button>
+        <button type="button" class="btn" data-preview-action="feed">餵點心</button>
+        <button type="button" class="btn" data-preview-action="play">一起玩</button>
+        <button type="button" class="btn" data-preview-action="callBack">叫回來</button>
+        <p class="preview-feedback" id="previewFeedback" role="status">點一下打招呼、雙擊跳躍，也可以按住拖曳。</p>
       </div>
 
       <div class="preview-stage-wrapper">
@@ -1444,7 +1563,7 @@
               <span class="browser-dot"></span>
               <span class="browser-dot"></span>
             </div>
-            <div class="browser-address">https://your-website.example.com/ （可直接捲動頁面、點擊按鈕或拖曳下方寵物）</div>
+            <div class="browser-address">https://your-website.example.com/</div>
           </div>
 
           <!-- Simulated Viewport -->
@@ -1463,8 +1582,9 @@
               </nav>
 
               <div class="mock-hero">
-                <h2>測試寵物在真實網頁中的互動與點擊穿透表現</h2>
-                <p>這是一個完整的模擬網站。你可以直接點擊下方按鈕、捲動頁面，或直接點擊、撫摸、雙擊、拖曳畫面底部的「<span id="mockHeroPetName">咖呲</span>」，驗證寵物不會阻擋網站原本的操作。</p>
+                <div class="panel-kicker">DEMO WEBSITE</div>
+                <h2>和<span id="mockHeroPetName">咖呲</span>打個招呼</h2>
+                <p>試著輕點、來回摸摸，或抱起寵物再放下。也可以捲動這個示範網站，確認寵物在頁面上的實際表現。</p>
                 <div class="mock-cta-row">
                   <button type="button" class="btn btn-primary mock-interactive-trigger" data-msg="成功觸發網站「立即開始體驗」主按鈕">立即開始體驗</button>
                   <button type="button" class="btn mock-interactive-trigger" data-msg="成功觸發網站「了解更多資訊」次要按鈕">了解更多資訊</button>
@@ -1772,7 +1892,7 @@
           if (isUserInteraction) this.unlock();
           if (!this.ctx || this.ctx.state !== 'running') return;
 
-          const vol = Math.max(0, Math.min(1, (config.audioVolume || 60) / 100)) * 0.25;
+          const vol = Math.max(0, Math.min(1, (config.audioVolume ?? 60) / 100)) * 0.25;
           if (vol <= 0.001) return;
 
           const now = this.ctx.currentTime;
@@ -1897,10 +2017,15 @@
 
           ctx.restore();
 
-          // Non-emoji pixel effects (Floating Zzz pixels when sleeping or pixel heart when happy/petted)
-          if (state === 'sleep') {
+          // Draw the snack briefly before the usual happy reaction.
+          if (animState.snackVisible) {
+            px(24, 3, 5, 4, '#92400E');
+            px(25, 2, 3, 6, '#D97706');
+            px(25, 3, 1, 1, '#FDE68A');
+            px(27, 5, 1, 1, '#FDE68A');
+          } else if (state === 'sleep') {
             this._drawSleepPixels(ctx, scale, animState.effectTick);
-          } else if (state === 'happy' || state === 'react' || animState.pettingActive) {
+          } else if (state === 'happy' || state === 'react') {
             this._drawHeartPixels(ctx, scale, animState.effectTick);
           }
         }
@@ -2255,16 +2380,15 @@
 
           // Interaction State
           this.isDragging = false;
+          this.activePointerId = null;
           this.dragStartX = 0;
           this.dragStartY = 0;
           this.pointerDownX = 0;
           this.pointerDownY = 0;
-          this.hasMovedDuringPointer = false;
           this.pettingDistance = 0;
-          this.pettingActive = false;
           this.pettingCooldown = 0;
-          this.clickCount = 0;
-          this.lastClickTime = 0;
+          this.lastTap = null;
+          this.reactionAnimation = null;
           this.isHidden = false;
           this.menuOpen = false;
           this.bubbleTimer = 0;
@@ -2279,6 +2403,10 @@
           this._mountShadowDOM();
           this._recalcBounds(true);
           this._bindEvents();
+          if (this.isPreview && typeof ResizeObserver === 'function') {
+            this.resizeObserver = new ResizeObserver(() => this._recalcBounds(false));
+            this.resizeObserver.observe(this.container);
+          }
           this._startLoop();
         }
 
@@ -2332,20 +2460,22 @@
               left: 0;
               top: 0;
               pointer-events: auto;
-              touch-action: none;
               user-select: none;
               -webkit-user-select: none;
-              cursor: grab;
               will-change: transform;
             }
-            .wp-actor:active {
-              cursor: grabbing;
+            .wp-actor.wp-dragging .wp-canvas { cursor: grabbing; }
+            .wp-actor :focus-visible {
+              outline: 3px solid #D97706;
+              outline-offset: 2px;
             }
             .wp-actor.wp-hidden {
               display: none !important;
             }
             .wp-canvas {
               display: block;
+              touch-action: none;
+              transform-origin: center 82%;
               image-rendering: pixelated;
               image-rendering: crisp-edges;
             }
@@ -2353,19 +2483,18 @@
             .wp-bubble {
               position: absolute;
               bottom: calc(100% + 6px);
-              left: 50%;
+              left: calc(50% + var(--wp-bubble-shift, 0px));
               transform: translateX(-50%);
               background: #111827;
               color: #FFFFFF;
               font-size: 12px;
               line-height: 1.35;
               padding: 6px 10px;
-              border-radius: 8px;
-              white-space: nowrap;
-              max-width: 190px;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+              border-radius: 6px;
+              box-sizing: border-box;
+              width: max-content;
+              max-width: 184px;
+              overflow-wrap: anywhere;
               pointer-events: none;
               opacity: 0;
               transition: opacity 0.18s ease, transform 0.18s ease;
@@ -2383,14 +2512,20 @@
               border-style: solid;
               border-color: #111827 transparent transparent transparent;
             }
+            .wp-menu-open .wp-bubble { opacity: 0; }
+            .wp-near-top .wp-bubble { top: calc(100% + 8px); bottom: auto; }
+            .wp-near-top .wp-bubble::after { display: none; }
+            @media (prefers-reduced-motion: reduce) {
+              .wp-bubble, .wp-menu-trigger { transition: none; }
+            }
             /* Quick Action Trigger Button */
             .wp-menu-trigger {
               position: absolute;
               top: -4px;
               right: -4px;
-              width: 22px;
-              height: 22px;
-              border-radius: 50%;
+              width: 28px;
+              height: 28px;
+              border-radius: 6px;
               border: 1px solid #E5E7EB;
               background: #FFFFFF;
               color: #111827;
@@ -2399,7 +2534,7 @@
               align-items: center;
               justify-content: center;
               cursor: pointer;
-              box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+              z-index: 2;
               opacity: 0;
               transition: opacity 0.15s;
               padding: 0;
@@ -2409,11 +2544,15 @@
             .wp-actor.wp-menu-open .wp-menu-trigger {
               opacity: 1;
             }
+            @media (hover: none), (pointer: coarse) {
+              .wp-menu-trigger { opacity: 1; width: 34px; height: 34px; }
+              .wp-menu-btn { min-height: 36px; }
+            }
             /* Compact Context Menu */
             .wp-menu {
               position: absolute;
               bottom: calc(100% + 8px);
-              left: 50%;
+              left: calc(50% + var(--wp-menu-shift, 0px));
               transform: translateX(-50%);
               background: #FFFFFF;
               border: 1px solid #E5E7EB;
@@ -2422,8 +2561,10 @@
               display: none;
               flex-direction: column;
               gap: 2px;
-              min-width: 108px;
-              box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+              width: 124px;
+              box-sizing: border-box;
+              max-height: var(--wp-menu-height, 240px);
+              overflow-y: auto;
               z-index: 5;
             }
             .wp-menu.wp-open {
@@ -2496,10 +2637,16 @@
 
           this.menuEl = document.createElement('div');
           this.menuEl.className = 'wp-menu';
-          this.menuEl.setAttribute('role', 'menu');
+          this.menuEl.setAttribute('role', 'group');
+          this.menuEl.setAttribute('aria-label', '寵物互動');
+          this.menuEl.id = 'wp-actions';
+          this.menuTriggerBtn.setAttribute('aria-controls', this.menuEl.id);
+          this.menuTriggerBtn.setAttribute('aria-expanded', 'false');
 
           const menuItems = [
             { action: 'pet', label: '摸摸' },
+            { action: 'feed', label: '餵點心' },
+            { action: 'play', label: '一起玩' },
             { action: 'callName', label: '叫名字' },
             { action: 'sit', label: '坐下' },
             { action: 'sleep', label: '睡覺' },
@@ -2511,7 +2658,6 @@
             const btn = document.createElement('button');
             btn.type = 'button';
             btn.className = 'wp-menu-btn';
-            btn.setAttribute('role', 'menuitem');
             btn.dataset.action = item.action;
             btn.textContent = item.label;
             this.menuEl.appendChild(btn);
@@ -2519,6 +2665,7 @@
 
           this.canvas = document.createElement('canvas');
           this.canvas.className = 'wp-canvas';
+          this.canvas.setAttribute('role', 'button');
           this.ctx = this.canvas.getContext('2d');
 
           this.recallBtn = document.createElement('button');
@@ -2559,13 +2706,21 @@
         _syncCanvasResolution() {
           const displaySize = this._getEffectiveSize();
           const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          this.displaySize = displaySize;
           this.canvas.style.width = displaySize + 'px';
           this.canvas.style.height = displaySize + 'px';
-          this.canvas.width = Math.round(displaySize * dpr);
-          this.canvas.height = Math.round(displaySize * dpr);
+          const resolution = Math.round(displaySize * dpr);
+          if (this.canvas.width !== resolution || this.canvas.height !== resolution) {
+            this.canvas.width = resolution;
+            this.canvas.height = resolution;
+          }
           this.actorEl.style.width = displaySize + 'px';
           this.actorEl.style.height = displaySize + 'px';
           this.menuTriggerBtn.style.display = this.config.showQuickMenu ? 'flex' : 'none';
+          this.canvas.tabIndex = this.config.enableClick ? 0 : -1;
+          this.canvas.setAttribute('aria-disabled', String(!this.config.enableClick));
+          this.canvas.setAttribute('aria-label', `向${this.config.name}打招呼`);
+          this.canvas.style.cursor = this.config.enableDrag ? 'grab' : (this.config.enableClick ? 'pointer' : 'default');
         }
 
         _getStageRect() {
@@ -2586,10 +2741,14 @@
           const rect = this._getStageRect();
           const size = this._getEffectiveSize();
           const margin = Number(this.config.edgeMargin) || 20;
-          const bottomOff = Number(this.config.bottomOffset) || 12;
+          const bottomOff = Number(this.config.bottomOffset ?? 12);
+          this.stageWidth = rect.width;
 
-          this.minX = Math.max(4, margin);
-          this.maxX = Math.max(this.minX + 10, rect.width - size - margin);
+          this.minX = Math.min(Math.max(4, margin), Math.max(0, (rect.width - size) / 2));
+          this.maxX = Math.max(this.minX, rect.width - size - this.minX);
+          if (this.targetX !== null) {
+            this.targetX = Math.max(this.minX, Math.min(this.maxX, this.targetX));
+          }
           this.groundY = Math.max(20, rect.height - size - bottomOff);
 
           const isMobileWidth = rect.width <= 520;
@@ -2642,137 +2801,89 @@
 
         _applyTransform() {
           this.actorEl.style.transform = `translate3d(${Math.round(this.x)}px, ${Math.round(this.y)}px, 0)`;
+          const center = this.x + this.displaySize / 2;
+          for (const [overlay, halfWidth] of [['bubble', 92], ['menu', 62]]) {
+            const margin = Math.min(halfWidth + 4, this.stageWidth / 2);
+            const shift = Math.max(margin, Math.min(this.stageWidth - margin, center)) - center;
+            this.actorEl.style.setProperty(`--wp-${overlay}-shift`, `${Math.round(shift)}px`);
+          }
+          this.actorEl.style.setProperty('--wp-menu-height', `${Math.max(44, Math.floor(this.y - 12))}px`);
+          this.actorEl.classList.toggle('wp-near-top', this.y < 68);
         }
 
         _bindEvents() {
           this._boundHandlers.onPointerDown = (e) => {
-            if (e.target === this.menuTriggerBtn || this.menuEl.contains(e.target)) return;
-            this.sound.unlock();
+            if (e.target !== this.canvas || e.button !== 0 || this.activePointerId !== null) return;
+            if (!this.config.enableClick && !this.config.enableDrag) return;
+            this.activePointerId = e.pointerId;
             this.pointerDownX = e.clientX;
             this.pointerDownY = e.clientY;
             this.dragStartX = this.x;
             this.dragStartY = this.y;
-            this.hasMovedDuringPointer = false;
             this.pettingDistance = 0;
-
-            if (this.config.enableDrag) {
-              this.isDragging = true;
-              try { this.actorEl.setPointerCapture(e.pointerId); } catch (err) {}
-            }
+            this.actorEl.setPointerCapture(e.pointerId);
           };
 
           this._boundHandlers.onPointerMove = (e) => {
-            const dx = e.clientX - this.pointerDownX;
-            const dy = e.clientY - this.pointerDownY;
-            const dist = Math.hypot(dx, dy);
-
-            if (this.isDragging && dist > 6) {
-              this.hasMovedDuringPointer = true;
-              this.setState('drag', 10);
-              const rect = this._getStageRect();
-              const size = this._getEffectiveSize();
+            if (this.activePointerId !== null) {
+              if (this.activePointerId !== e.pointerId || !this.config.enableDrag) return;
+              const dx = e.clientX - this.pointerDownX;
+              const dy = e.clientY - this.pointerDownY;
+              if (!this.isDragging) {
+                if (Math.hypot(dx, dy) < 7) return;
+                this.isDragging = true;
+                this.lastTap = null;
+                this.vy = 0;
+                this.actorEl.classList.add('wp-dragging');
+                this.setState('drag');
+                this._reportInteraction(`抱起了${this.config.name}`);
+              }
               this.x = Math.max(this.minX, Math.min(this.maxX, this.dragStartX + dx));
               this.y = Math.max(10, Math.min(this.groundY, this.dragStartY + dy));
-              this.config.customXRatio = Number((this.x / Math.max(1, rect.width - size)).toFixed(3));
               this._applyTransform();
               return;
             }
 
-            // Petting detection (gentle stroke on pet body without dragging)
-            if (!this.isDragging && this.config.enablePetting && this.pettingCooldown <= 0) {
-              this.pettingDistance += Math.abs(e.movementX || 2);
-              if (this.pettingDistance > 42) {
-                this.pettingDistance = 0;
-                this.pettingCooldown = 2.0;
-                this.pettingActive = true;
-                this.setState('happy', 2.4);
-                this.sound.play('happy', this.config, true);
-                this.showBubble('好舒服喔～');
-              }
+            if (e.target !== this.canvas || e.buttons || this.menuOpen ||
+                !this.config.enablePetting || this.pettingCooldown > 0) return;
+            this.pettingDistance += Math.min(20, Math.hypot(e.movementX, e.movementY));
+            if (this.pettingDistance >= 52) {
+              this.pettingDistance = 0;
+              this.pettingCooldown = 2.0;
+              this.performAction('pet');
             }
           };
 
-          this._boundHandlers.onPointerUp = (e) => {
-            if (this.isDragging) {
-              try { this.actorEl.releasePointerCapture(e.pointerId); } catch (err) {}
-              this.isDragging = false;
-
-              if (this.hasMovedDuringPointer) {
-                // Drop naturally with gravity
-                this.vy = 0;
-                this.setState('jump', 1.2);
-                this._savePositionState();
-                if (this.options.onConfigMutate) {
-                  this.options.onConfigMutate(this.config);
-                }
-                return;
-              }
-            }
-
-            if (e.target === this.menuTriggerBtn || this.menuEl.contains(e.target)) return;
-
-            // Handle Click / Multi-Click / Double Click
-            if (this.config.enableClick) {
-              const now = performance.now();
-              if (now - this.lastClickTime < 340) {
-                this.clickCount++;
-              } else {
-                this.clickCount = 1;
-              }
-              this.lastClickTime = now;
-
-              if (this.clickCount >= 2 && this.config.enableDblClick) {
-                this.direction = -this.direction;
-                this.jump(true);
-                this.showBubble(this._pickRandomPhrase());
-              } else {
-                this.setState('happy', 2.2);
-                this.sound.play('voice', this.config, true);
-                if (Math.random() < 0.75) {
-                  this.showBubble(this._pickRandomPhrase());
-                }
-              }
-            }
+          this._boundHandlers.onPointerUp = (e) => this._finishPointer(e, false);
+          this._boundHandlers.onPointerCancel = (e) => this._finishPointer(e, true);
+          this._boundHandlers.onPointerLeave = () => { this.pettingDistance = 0; };
+          this._boundHandlers.onCanvasKey = (e) => {
+            if (!this.config.enableClick || (e.key !== 'Enter' && e.key !== ' ')) return;
+            e.preventDefault();
+            if (!e.repeat) this._greet();
           };
 
           this._boundHandlers.onMenuTrigger = (e) => {
             e.stopPropagation();
             this.toggleMenu();
+            if (this.menuOpen && e.detail === 0) this.menuEl.querySelector('button').focus();
           };
 
           this._boundHandlers.onMenuClick = (e) => {
             e.stopPropagation();
             const btn = e.target.closest('[data-action]');
             if (!btn) return;
-            const action = btn.dataset.action;
             this.toggleMenu(false);
-
-            if (action === 'pet') {
-              this.setState('happy', 2.5);
-              this.sound.play('happy', this.config, true);
-              this.showBubble('最喜歡摸摸了！');
-            } else if (action === 'callName') {
-              this.setState('react', 2.2);
-              this.sound.play('voice', this.config, true);
-              this.showBubble(`我是${this.config.name}！`);
-            } else if (action === 'sit') {
-              this.setState('sit', 5.0);
-              this.showBubble('乖乖坐好');
-            } else if (action === 'sleep') {
-              this.setState('sleep', 8.0);
-              this.showBubble('先睡一下喔');
-            } else if (action === 'callBack') {
-              this.callBackToHome();
-            } else if (action === 'hide') {
-              this.setHidden(true);
-            }
+            this.performAction(btn.dataset.action);
+            if (e.detail === 0) (this.isHidden ? this.recallBtn : this.menuTriggerBtn).focus();
           };
 
-          this._boundHandlers.onRecall = () => {
+          this._boundHandlers.onRecall = (e) => {
             this.setHidden(false);
             this.sound.play('wake', this.config, true);
-            this.setState('happy', 2.0);
+            this.setState('happy', 2.0, true);
             this.showBubble(`${this.config.name}回來囉！`);
+            if (e.detail === 0) (this.config.showQuickMenu ? this.menuTriggerBtn : this.canvas).focus();
           };
 
           this._boundHandlers.onDocClick = (e) => {
@@ -2786,6 +2897,7 @@
           this._boundHandlers.onKeyDown = (e) => {
             if (e.key === 'Escape' && this.menuOpen) {
               this.toggleMenu(false);
+              if (this.shadow.activeElement) this.menuTriggerBtn.focus();
             }
           };
 
@@ -2802,6 +2914,10 @@
           this.actorEl.addEventListener('pointerdown', this._boundHandlers.onPointerDown);
           this.actorEl.addEventListener('pointermove', this._boundHandlers.onPointerMove);
           this.actorEl.addEventListener('pointerup', this._boundHandlers.onPointerUp);
+          this.actorEl.addEventListener('pointercancel', this._boundHandlers.onPointerCancel);
+          this.actorEl.addEventListener('lostpointercapture', this._boundHandlers.onPointerCancel);
+          this.canvas.addEventListener('pointerleave', this._boundHandlers.onPointerLeave);
+          this.canvas.addEventListener('keydown', this._boundHandlers.onCanvasKey);
           this.menuTriggerBtn.addEventListener('click', this._boundHandlers.onMenuTrigger);
           this.menuEl.addEventListener('click', this._boundHandlers.onMenuClick);
           this.recallBtn.addEventListener('click', this._boundHandlers.onRecall);
@@ -2811,14 +2927,121 @@
           document.addEventListener('visibilitychange', this._boundHandlers.onVisibility);
         }
 
+        _finishPointer(e, cancelled) {
+          if (e.pointerId !== this.activePointerId) return;
+          this.activePointerId = null;
+          if (this.actorEl.hasPointerCapture(e.pointerId)) this.actorEl.releasePointerCapture(e.pointerId);
+
+          if (this.isDragging) {
+            this.isDragging = false;
+            this.actorEl.classList.remove('wp-dragging');
+            this.setState(this.y < this.groundY ? 'jump' : 'idle', 2.5);
+            if (!cancelled) {
+              const travel = Math.max(1, this.stageWidth - this.displaySize);
+              this.config.customXRatio = Number((this.x / travel).toFixed(3));
+              this._savePositionState();
+              this.options.onConfigMutate?.(this.config);
+              this._reportInteraction(`放下了${this.config.name}`);
+            }
+            return;
+          }
+
+          if (cancelled || !this.config.enableClick ||
+              Math.hypot(e.clientX - this.pointerDownX, e.clientY - this.pointerDownY) >= 7) return;
+          const now = performance.now();
+          const previous = this.lastTap;
+          if (this.config.enableDblClick && previous && previous.type === e.pointerType &&
+              now - previous.time < 340 && Math.hypot(e.clientX - previous.x, e.clientY - previous.y) < 28) {
+            this.lastTap = null;
+            this.direction *= -1;
+            this.performAction('play');
+            return;
+          }
+          this.lastTap = { time: now, type: e.pointerType, x: e.clientX, y: e.clientY };
+          this._greet();
+        }
+
+        _reportInteraction(message) {
+          this.options.onInteraction?.(message);
+        }
+
+        _animateReaction(keyframes, duration) {
+          this.reactionAnimation?.cancel();
+          if (!this.reducedMotion && this.canvas.animate) {
+            this.reactionAnimation = this.canvas.animate(
+              keyframes.map(transform => ({ transform })),
+              { duration, easing: 'ease-out' }
+            );
+          }
+        }
+
+        _greet() {
+          this.setState('happy', 2.2, true);
+          this._animateReaction(['scale(1)', 'scale(1.08, 0.93)', 'scale(1)'], 300);
+          this.sound.play('voice', this.config, true);
+          this.showBubble(this._pickRandomPhrase());
+          this._reportInteraction(`${this.config.name}向你打了招呼！`);
+        }
+
+        performAction(action) {
+          if (this.isDragging) return;
+          const name = this.config.name;
+          if (action !== 'hide' && this.isHidden) this.setHidden(false);
+          switch (action) {
+            case 'pet':
+              this.setState('happy', 2.5, true);
+              this._animateReaction(['rotate(0)', 'rotate(-7deg) scale(1.06)', 'rotate(4deg)', 'rotate(0)'], 420);
+              this.sound.play('happy', this.config, true);
+              this.showBubble('最喜歡摸摸了！');
+              this._reportInteraction(`${name}舒服地撒嬌了！`);
+              break;
+            case 'feed':
+              this.setState('react', 2.4, true);
+              this.snackVisible = true;
+              this._animateReaction(['scale(1)', 'scale(1.1, 0.9)', 'scale(1)', 'scale(1.06, 0.94)', 'scale(1)'], 480);
+              this.sound.play('happy', this.config, true);
+              this.showBubble('嚼嚼……好好吃！');
+              this._reportInteraction(`${name}吃下了你給的點心！`);
+              break;
+            case 'play':
+              if (this.reducedMotion) this.setState('happy', 2.4, true);
+              else this.jump(true);
+              this.showBubble('一起玩！');
+              this._reportInteraction(`${name}開心地陪你玩！`);
+              break;
+            case 'callName':
+              this.setState('react', 2.2, true);
+              this.sound.play('voice', this.config, true);
+              this.showBubble(`我是${name}！`);
+              break;
+            case 'sit':
+              this.setState('sit', 5, true);
+              this.showBubble('乖乖坐好');
+              break;
+            case 'sleep':
+              this.setState('sleep', 8, true);
+              this.showBubble('先睡一下喔');
+              break;
+            case 'callBack':
+              this.callBackToHome();
+              this._reportInteraction(`你呼喚了${name}`);
+              break;
+            case 'hide':
+              this.setHidden(true);
+              break;
+          }
+        }
+
         toggleMenu(forceState) {
           this.menuOpen = typeof forceState === 'boolean' ? forceState : !this.menuOpen;
+          this.menuTriggerBtn.setAttribute('aria-expanded', String(this.menuOpen));
           this.menuEl.classList.toggle('wp-open', this.menuOpen);
           this.actorEl.classList.toggle('wp-menu-open', this.menuOpen);
         }
 
         setHidden(hidden) {
           this.isHidden = Boolean(hidden);
+          if (this.isHidden) this.toggleMenu(false);
           this._syncVisibilityUI();
           this._savePositionState();
           this._notifyStateChange();
@@ -2854,10 +3077,16 @@
         callBackToHome() {
           this.setHidden(false);
           const homeX = Math.round((this.roamMinX + this.roamMaxX) / 2);
-          this.targetX = homeX;
-          this.direction = homeX >= this.x ? 1 : -1;
-          this.setState('run', 4.5);
-          this.showBubble('馬上跑回來！');
+          if (this.config.staticMode || this.reducedMotion) {
+            this.x = homeX;
+            this._applyTransform();
+            this.setState('happy', 2, true);
+          } else {
+            this.direction = homeX >= this.x ? 1 : -1;
+            this.setState('run', 4.5);
+            this.targetX = homeX;
+          }
+          this.showBubble('我來了！');
         }
 
         resetPosition() {
@@ -2867,11 +3096,14 @@
           this.setState('idle', 3.0);
         }
 
-        setState(newState, duration = 3.5) {
+        setState(newState, duration = 3.5, temporary = false) {
           const prevState = this.state;
+          this.targetX = null;
           this.state = newState;
           this.stateTimer = 0;
           this.stateDuration = duration;
+          this.temporaryState = temporary;
+          this.snackVisible = false;
           this.frame = 0;
           if (prevState === 'sleep' && newState !== 'sleep') {
             this.sound.play('wake', this.config, false);
@@ -2939,7 +3171,7 @@
 
           // Occasional spontaneous speech bubble
           if (this.config.enableBubble && this.bubbleCooldown <= 0) {
-            if (Math.random() < (Number(this.config.bubbleFreq) || 35) / 250) {
+            if (Math.random() < Number(this.config.bubbleFreq ?? 35) / 250) {
               this.showBubble(this._pickRandomPhrase());
               this.bubbleCooldown = 10;
             }
@@ -2965,10 +3197,7 @@
 
         _update(dt) {
           this.effectTick++;
-          if (this.pettingCooldown > 0) {
-            this.pettingCooldown -= dt;
-            if (this.pettingCooldown <= 0) this.pettingActive = false;
-          }
+          if (this.pettingCooldown > 0) this.pettingCooldown -= dt;
           if (this.bubbleCooldown > 0) this.bubbleCooldown -= dt;
 
           if (this.bubbleTimer > 0) {
@@ -3002,7 +3231,7 @@
             this.frame = (this.frame + 1) % 4;
           }
 
-          if (this.isDragging) return;
+          if (this.isDragging || this.activePointerId !== null || this.menuOpen) return;
 
           // Gravity / Jump physics
           if (this.y < this.groundY || this.vy !== 0) {
@@ -3033,7 +3262,7 @@
                   (this.direction === -1 && this.x <= this.targetX)) {
                 this.x = this.targetX;
                 this.targetX = null;
-                this.setState('happy', 2.0);
+                this.setState('happy', 2.0, true);
               }
             } else {
               // Respect boundary & turn around smoothly
@@ -3050,8 +3279,9 @@
 
           // Autonomous State Machine Timer
           this.stateTimer += dt;
-          if (this.config.autoBehavior && this.stateTimer >= this.stateDuration) {
-            this._decideNextAutonomousState();
+          if (this.targetX === null && this.stateTimer >= this.stateDuration) {
+            if (this.config.autoBehavior) this._decideNextAutonomousState();
+            else if (this.temporaryState) this.setState('idle');
           }
         }
 
@@ -3062,7 +3292,7 @@
             direction: this.direction,
             blink: this.blink,
             effectTick: this.effectTick,
-            pettingActive: this.pettingActive
+            snackVisible: this.snackVisible && this.stateTimer < 0.7
           });
         }
 
@@ -3070,6 +3300,8 @@
           const prevSpecies = this.config.species;
           Object.assign(this.config, newConfig || {});
           this.hostEl.style.zIndex = String(Number(this.config.zIndex) || 9990);
+          if (!this.config.showQuickMenu) this.toggleMenu(false);
+          if (!this.config.enableBubble) this.bubbleEl.classList.remove('wp-visible');
           this.actorEl.setAttribute('aria-label', `互動寵物 ${this.config.name}`);
           this._recalcBounds(prevSpecies !== this.config.species);
           this._syncVisibilityUI();
@@ -3078,9 +3310,16 @@
 
         destroy() {
           if (this._rafId) cancelAnimationFrame(this._rafId);
+          this.resizeObserver?.disconnect();
+          this.reactionAnimation?.cancel();
+          this.sound.ctx?.close().catch(() => {});
           this.actorEl.removeEventListener('pointerdown', this._boundHandlers.onPointerDown);
           this.actorEl.removeEventListener('pointermove', this._boundHandlers.onPointerMove);
           this.actorEl.removeEventListener('pointerup', this._boundHandlers.onPointerUp);
+          this.actorEl.removeEventListener('pointercancel', this._boundHandlers.onPointerCancel);
+          this.actorEl.removeEventListener('lostpointercapture', this._boundHandlers.onPointerCancel);
+          this.canvas.removeEventListener('pointerleave', this._boundHandlers.onPointerLeave);
+          this.canvas.removeEventListener('keydown', this._boundHandlers.onCanvasKey);
           this.menuTriggerBtn.removeEventListener('click', this._boundHandlers.onMenuTrigger);
           this.menuEl.removeEventListener('click', this._boundHandlers.onMenuClick);
           this.recallBtn.removeEventListener('click', this._boundHandlers.onRecall);
@@ -3174,16 +3413,16 @@
       };
 
       const STATE_LABELS = {
-        idle: 'Idle (待機呼吸)',
-        walk: 'Walk (底部散步)',
-        run: 'Run (開心小跑步)',
-        sit: 'Sit (乖乖坐下)',
-        sleep: 'Sleep (打盹睡覺)',
-        jump: 'Jump (跳躍落地)',
-        happy: 'Happy (搖尾撒嬌)',
-        react: 'React (互動回應)',
-        drag: 'Drag (抱起拖曳中)',
-        hide: 'Hide (已暫時隱藏)'
+        idle: '待機呼吸',
+        walk: '底部散步',
+        run: '開心小跑步',
+        sit: '乖乖坐下',
+        sleep: '打盹睡覺',
+        jump: '跳躍落地',
+        happy: '搖尾撒嬌',
+        react: '互動回應',
+        drag: '抱起拖曳中',
+        hide: '已暫時隱藏'
       };
 
       let projects = [];
@@ -3260,7 +3499,9 @@
       // Sync UI Controls from activeConfig
       function syncFormFromConfig() {
         document.querySelectorAll('.species-card').forEach(card => {
-          card.classList.toggle('active', card.dataset.species === activeConfig.species);
+          const selected = card.dataset.species === activeConfig.species;
+          card.classList.toggle('active', selected);
+          card.setAttribute('aria-pressed', String(selected));
         });
 
         document.getElementById('cfgPetName').value = activeConfig.name || '咖呲';
@@ -3384,8 +3625,8 @@
       }
 
       function buildSelfContainedEmbedSnippet() {
-        const serializedConfig = JSON.stringify(activeConfig);
-        return `<!-- WUMETAX WidgetPets 網站互動寵物 (${activeConfig.name}) Start -->\n` +
+        const serializedConfig = JSON.stringify(activeConfig).replace(/</g, '\\u003c');
+        return `<!-- WUMETAX WidgetPets 網站互動寵物 Start -->\n` +
                `<script>\n` +
                `(function(){\n` +
                `  if (window.__wumetaxWidgetPetMounted) return;\n` +
@@ -3445,7 +3686,7 @@
       }
 
       function buildExternalExampleHtml() {
-        const serializedConfig = JSON.stringify(activeConfig, null, 2);
+        const serializedConfig = JSON.stringify(activeConfig, null, 2).replace(/</g, '\\u003c');
         return `<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -3498,6 +3739,9 @@
         previewPetInstance = window.WidgetPets.mount(activeConfig, {
           container: mountContainer,
           isPreview: true,
+          onInteraction: (message) => {
+            document.getElementById('previewFeedback').textContent = message;
+          },
           onStateChange: (st) => {
             const lbl = document.getElementById('lblCurrentState');
             if (lbl) lbl.textContent = STATE_LABELS[st] || st;
@@ -3531,9 +3775,6 @@
             if (subtab) {
               const targetTabBtn = document.querySelector(`.config-tab[data-tab="${subtab}"]`);
               if (targetTabBtn) targetTabBtn.click();
-            }
-            if (view === 'preview' && previewPetInstance) {
-              setTimeout(() => previewPetInstance._recalcBounds(false), 60);
             }
           });
         });
@@ -3659,10 +3900,7 @@
             const w = btn.dataset.vpWidth;
             const h = btn.dataset.vpHeight;
             sim.style.width = w === '100%' ? '100%' : w + 'px';
-            sim.style.height = h + 'px';
-            setTimeout(() => {
-              if (previewPetInstance) previewPetInstance._recalcBounds(false);
-            }, 260);
+            sim.style.height = h === 'auto' ? '' : h + 'px';
           });
         });
 
@@ -3673,6 +3911,16 @@
             const msg = trigger.dataset.msg || '網站按鈕成功點擊';
             const logEl = document.getElementById('mockSiteLog');
             logEl.textContent = `網站互動驗證：${msg}（時間：${new Date().toLocaleTimeString()}）`;
+          });
+        });
+
+        document.querySelectorAll('[data-preview-action]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (previewPetInstance.hostEl.style.display === 'none') {
+              document.getElementById('previewFeedback').textContent = '目前的手機顯示策略會隱藏寵物。請切換較寬的預覽尺寸，或到「位置」調整顯示策略。';
+              return;
+            }
+            previewPetInstance.performAction(btn.dataset.previewAction);
           });
         });
 
@@ -3717,6 +3965,15 @@
             previewPetInstance._decideNextAutonomousState();
           }
           showToast('已恢復寵物自主行為狀態機');
+        });
+
+        const projectBar = document.getElementById('projectBar');
+        const projectToggle = projectBar.querySelector('.project-tools-toggle');
+        projectToggle.addEventListener('click', () => {
+          const expanded = projectBar.dataset.expanded === 'false';
+          projectBar.dataset.expanded = String(expanded);
+          projectToggle.setAttribute('aria-expanded', String(expanded));
+          projectToggle.textContent = expanded ? '專案管理 ▴' : '專案管理 ▾';
         });
 
         // Project Storage Actions
