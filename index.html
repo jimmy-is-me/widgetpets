@@ -1,0 +1,3912 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>免費網站互動寵物產生器｜柴犬、貓咪桌面寵物與網站嵌入工具｜WidgetPets</title>
+  <meta name="description" content="免費使用 WidgetPets 網站互動寵物製作器，自訂柴犬、貓咪等可愛像素寵物，支援走路、睡覺、跳躍、點擊互動、拖曳移動與手機版顯示，即時預覽並產生 HTML／JavaScript 嵌入程式碼，讓你的網站擁有會動的互動寵物。">
+  <link rel="canonical" href="https://widgetpets.wumetax.com/">
+  
+  <!-- Open Graph / Twitter Card -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="免費網站互動寵物產生器｜柴犬、貓咪桌面寵物與網站嵌入工具｜WidgetPets">
+  <meta property="og:description" content="免費使用 WidgetPets 網站互動寵物製作器，自訂柴犬、貓咪等可愛像素寵物，支援走路、睡覺、跳躍、點擊互動、拖曳移動與手機版顯示，即時預覽並產生 HTML／JavaScript 嵌入程式碼。">
+  <meta property="og:url" content="https://widgetpets.wumetax.com/">
+  <meta property="og:site_name" content="WUMETAX WidgetPets">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="免費網站互動寵物產生器｜WidgetPets">
+  <meta name="twitter:description" content="幾分鐘內建立專屬網站互動寵物，支援柴犬咖呲、橘貓、小兔子，一鍵匯出 Shadow DOM 安全隔離嵌入碼。">
+
+  <!-- Inline SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Cpath d='M7 9h4v4H7zm14 0h4v4h-4zM6 13h20v12H6z' fill='%23E08E36'/%3E%3Cpath d='M9 17h14v8H9z' fill='%23FFF7EB'/%3E%3Crect x='10' y='15' width='3' height='3' fill='%231F1916'/%3E%3Crect x='19' y='15' width='3' height='3' fill='%231F1916'/%3E%3Crect x='15' y='17' width='2' height='2' fill='%231F1916'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts with graceful fallback -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- SoftwareApplication JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "WUMETAX WidgetPets 網站互動寵物製作工作站",
+    "operatingSystem": "Web Browser",
+    "applicationCategory": "DeveloperApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "TWD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "WUMETAX",
+      "url": "https://wumetax.com/"
+    },
+    "url": "https://widgetpets.wumetax.com/",
+    "description": "免費線上製作網站互動像素寵物，支援柴犬咖呲、橘貓、小兔子，具備完整狀態機、滑鼠觸控互動與獨立 Shadow DOM 網站嵌入碼匯出。"
+  }
+  </script>
+
+  <style>
+    :root {
+      --nav-bg: #111827;
+      --primary: #3B82F6;
+      --primary-hover: #2563EB;
+      --primary-light: #EFF6FF;
+      --bg-main: #F3F4F6;
+      --card-bg: #FFFFFF;
+      --border: #E5E7EB;
+      --text-main: #111827;
+      --text-sub: #374151;
+      --text-muted: #6B7280;
+      --success: #10B981;
+      --danger: #EF4444;
+      --warning: #F59E0B;
+      --radius: 8px;
+      --font-sans: 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Navigation */
+    .top-navbar {
+      background-color: var(--nav-bg);
+      color: #FFFFFF;
+      height: 58px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #1F2937;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #FFFFFF;
+    }
+
+    .brand-badge {
+      background: #1F2937;
+      color: #93C5FD;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid #374151;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-link {
+      color: #D1D5DB;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-link:hover {
+      background: #1F2937;
+      color: #FFFFFF;
+    }
+
+    /* Project Bar */
+    .project-bar {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .project-selector-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .project-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Buttons & Inputs */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      height: 34px;
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: inherit;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: #F9FAFB;
+      border-color: #D1D5DB;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #FFFFFF;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+
+    .btn-danger {
+      color: var(--danger);
+      border-color: #FECACA;
+      background: #FEF2F2;
+    }
+
+    .btn-danger:hover {
+      background: #FEE2E2;
+    }
+
+    .btn-sm {
+      height: 30px;
+      padding: 0 10px;
+      font-size: 12px;
+    }
+
+    .select-input, .text-input {
+      height: 34px;
+      padding: 0 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--text-main);
+      background: #FFFFFF;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .select-input:focus, .text-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+    }
+
+    /* Mobile Mode Switcher (Hidden on Desktop) */
+    .mobile-workspace-nav {
+      display: none;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 6px 12px;
+      gap: 6px;
+      overflow-x: auto;
+    }
+
+    .mobile-tab-btn {
+      flex: 1;
+      min-width: 64px;
+      height: 34px;
+      border: 1px solid var(--border);
+      background: #F9FAFB;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-sub);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .mobile-tab-btn.active {
+      background: var(--primary);
+      color: #FFFFFF;
+      border-color: var(--primary);
+    }
+
+    /* Main 3-Column Workstation Grid */
+    .workstation-grid {
+      display: grid;
+      grid-template-columns: 350px 1fr 330px;
+      gap: 16px;
+      padding: 16px 20px;
+      min-height: calc(100vh - 120px);
+      max-width: 1920px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    .panel-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    .panel-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #F9FAFB;
+    }
+
+    .panel-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Left Panel Tabs */
+    .config-tabs {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      border-bottom: 1px solid var(--border);
+      background: #F9FAFB;
+    }
+
+    .config-tab {
+      padding: 10px 4px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-sub);
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+
+    .config-tab:hover {
+      color: var(--primary);
+      background: #F3F4F6;
+    }
+
+    .config-tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      background: #FFFFFF;
+      font-weight: 600;
+    }
+
+    .config-body {
+      padding: 16px;
+      max-height: calc(100vh - 220px);
+      overflow-y: auto;
+    }
+
+    .tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .tab-pane.active {
+      display: flex;
+    }
+
+    /* Form Controls */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .form-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .species-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .species-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 8px;
+      text-align: center;
+      cursor: pointer;
+      background: #FFFFFF;
+      transition: all 0.15s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .species-card:hover {
+      border-color: #93C5FD;
+      background: #F9FAFB;
+    }
+
+    .species-card.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+
+    .species-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .species-tag {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .color-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .color-picker-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: #FFFFFF;
+    }
+
+    .color-picker-wrap input[type="color"] {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    .color-hex {
+      font-size: 12px;
+      font-family: monospace;
+      color: var(--text-sub);
+    }
+
+    .preset-swatches {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .swatch-btn {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: #F9FAFB;
+      cursor: pointer;
+      color: var(--text-sub);
+    }
+
+    .swatch-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .range-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .range-wrap input[type="range"] {
+      flex: 1;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      background: #F9FAFB;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    .switch-label {
+      font-size: 13px;
+      color: var(--text-main);
+    }
+
+    .toggle-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* Speech Phrases List */
+    .phrases-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 180px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px;
+      background: #F9FAFB;
+    }
+
+    .phrase-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: #FFFFFF;
+      padding: 6px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+    }
+
+    .phrase-text {
+      flex: 1;
+      word-break: break-all;
+    }
+
+    /* Center Panel: Live Website Simulator */
+    .preview-toolbar {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background: #F9FAFB;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .viewport-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .vp-btn {
+      height: 30px;
+      padding: 0 10px;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      background: #FFFFFF;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--text-sub);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .vp-btn.active {
+      background: var(--primary);
+      color: #FFFFFF;
+      border-color: var(--primary);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #EFF6FF;
+      color: #1D4ED8;
+      border: 1px solid #BFDBFE;
+      font-weight: 500;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .preview-stage-wrapper {
+      background: #E5E7EB;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 640px;
+      overflow-x: auto;
+    }
+
+    .simulated-browser {
+      width: 100%;
+      height: 600px;
+      background: #FFFFFF;
+      border-radius: 10px;
+      border: 1px solid #CBD5E1;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: width 0.25s ease, height 0.25s ease;
+      position: relative;
+    }
+
+    .browser-chrome {
+      height: 36px;
+      background: #F1F5F9;
+      border-bottom: 1px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .browser-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .browser-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #CBD5E1;
+    }
+
+    .browser-address {
+      flex: 1;
+      height: 22px;
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      border-radius: 4px;
+      font-size: 11px;
+      color: #64748B;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    /* Viewport inside simulated browser where both website content and pet live */
+    .browser-viewport {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mock-site-scroll {
+      flex: 1;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Mock Website Styling inside Simulator */
+    .mock-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      border-bottom: 1px solid #F1F5F9;
+      background: rgba(255, 255, 255, 0.95);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .mock-brand {
+      font-weight: 700;
+      font-size: 15px;
+      color: #0F172A;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mock-nav-links {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+    }
+
+    .mock-nav-links a {
+      color: #475569;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .mock-nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .mock-hero {
+      padding: 36px 24px;
+      background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%);
+      border-bottom: 1px solid #E2E8F0;
+    }
+
+    .mock-hero h2 {
+      font-size: 22px;
+      color: #0F172A;
+      margin-bottom: 8px;
+    }
+
+    .mock-hero p {
+      font-size: 14px;
+      color: #475569;
+      max-width: 540px;
+      margin-bottom: 16px;
+    }
+
+    .mock-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mock-section {
+      padding: 28px 24px;
+      border-bottom: 1px solid #F1F5F9;
+    }
+
+    .mock-section h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: #1E293B;
+    }
+
+    .mock-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .mock-card {
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      padding: 14px;
+      background: #FFFFFF;
+    }
+
+    .mock-card h4 {
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #0F172A;
+    }
+
+    .mock-card p {
+      font-size: 12px;
+      color: #64748B;
+      margin-bottom: 10px;
+    }
+
+    .mock-footer {
+      padding: 24px;
+      background: #F8FAFC;
+      font-size: 12px;
+      color: #64748B;
+      text-align: center;
+    }
+
+    .mock-log-banner {
+      margin-top: 12px;
+      padding: 8px 12px;
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      color: #065F46;
+      border-radius: 6px;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Pet Mount Overlay inside Simulator */
+    .simulator-pet-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* Right Panel: Actions & Export */
+    .right-panel-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .export-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .export-subtitle {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    .code-box {
+      width: 100%;
+      height: 120px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #111827;
+      color: #E5E7EB;
+      resize: vertical;
+    }
+
+    /* Documentation & SEO Bottom Section */
+    .docs-container {
+      max-width: 1280px;
+      margin: 24px auto 48px;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .docs-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .docs-card h1 {
+      font-size: 22px;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+
+    .docs-card h2 {
+      font-size: 18px;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .docs-card h3 {
+      font-size: 15px;
+      color: var(--text-main);
+      margin: 14px 0 6px;
+    }
+
+    .docs-card p, .docs-card li {
+      font-size: 14px;
+      color: var(--text-sub);
+      margin-bottom: 8px;
+    }
+
+    .docs-card ul, .docs-card ol {
+      padding-left: 20px;
+    }
+
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .code-snippet-block {
+      background: #1F2937;
+      color: #F9FAFB;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 12px;
+      overflow-x: auto;
+      margin: 8px 0;
+    }
+
+    /* Site Footer */
+    .site-footer {
+      background: #FFFFFF;
+      border-top: 1px solid var(--border);
+      padding: 28px 20px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .footer-links a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Toast Notification */
+    .toast-msg {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #111827;
+      color: #FFFFFF;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: all 0.2s ease;
+    }
+
+    .toast-msg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive RWD */
+    @media (max-width: 1180px) {
+      .workstation-grid {
+        grid-template-columns: 320px 1fr;
+      }
+      .panel-right {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .mobile-workspace-nav {
+        display: flex;
+        position: sticky;
+        top: 58px;
+        z-index: 95;
+      }
+      .workstation-grid {
+        grid-template-columns: 1fr;
+        padding: 12px;
+      }
+      .config-body {
+        max-height: none;
+      }
+      .workstation-grid[data-mobile-view="preview"] .panel-left,
+      .workstation-grid[data-mobile-view="preview"] .panel-right {
+        display: none;
+      }
+      .workstation-grid[data-mobile-view="config"] .panel-center,
+      .workstation-grid[data-mobile-view="config"] .panel-right {
+        display: none;
+      }
+      .workstation-grid[data-mobile-view="export"] .panel-left,
+      .workstation-grid[data-mobile-view="export"] .panel-center {
+        display: none;
+      }
+      .preview-stage-wrapper {
+        padding: 8px;
+        min-height: 480px;
+      }
+      .simulated-browser {
+        height: 480px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="top-navbar">
+    <div class="brand-group">
+      <a href="https://widgetpets.wumetax.com/" class="brand-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .08.703 1.725 1.722 3.656 1 1.261-.472 1.96-1.45 2.344-2.5"/>
+          <path d="M14.267 5.172c0-1.39 1.577-2.493 3.5-2.172 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/>
+          <path d="M8 14v.5"/><path d="M16 14v.5"/>
+          <path d="M11.25 16.25h1.5L12 17l-.75-.75Z"/>
+          <path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444c0-1.061-.162-2.2-.493-3.309m-9.243-6.082A8.801 8.801 0 0 1 12 5c.78 0 1.5.108 2.161.306"/>
+        </svg>
+        <span class="brand-title">WUMETAX WidgetPets</span>
+      </a>
+      <span class="brand-badge">WUMETAX Lab</span>
+    </div>
+    <nav class="nav-actions" aria-label="主要導覽">
+      <a href="#docs-guide" class="nav-link">使用教學</a>
+      <a href="#wordpress-guide" class="nav-link">WordPress 嵌入</a>
+      <a href="https://wumetax.com/lab/" target="_blank" rel="noopener" class="nav-link">更多免費工具</a>
+      <a href="https://wumetax.com/" target="_blank" rel="noopener" class="nav-link">WUMETAX 官網</a>
+    </nav>
+  </header>
+
+  <!-- Project Storage Manager Bar -->
+  <section class="project-bar" aria-label="本機專案管理">
+    <div class="project-selector-group">
+      <span class="project-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        寵物專案設定：
+      </span>
+      <select id="projectSelect" class="select-input" aria-label="選擇已儲存的寵物設定"></select>
+      <button type="button" id="btnSaveProject" class="btn btn-primary btn-sm">儲存目前設定</button>
+      <button type="button" id="btnSaveAsProject" class="btn btn-sm">另存新設定</button>
+      <button type="button" id="btnRenameProject" class="btn btn-sm">重新命名</button>
+      <button type="button" id="btnDuplicateProject" class="btn btn-sm">複製</button>
+      <button type="button" id="btnDeleteProject" class="btn btn-danger btn-sm">刪除</button>
+    </div>
+    <div class="project-selector-group">
+      <button type="button" id="btnResetDefaults" class="btn btn-sm">還原預設咖呲</button>
+      <button type="button" id="btnExportJson" class="btn btn-sm">匯出 JSON</button>
+      <label class="btn btn-sm" style="cursor:pointer;">
+        匯入 JSON
+        <input type="file" id="inputImportJson" accept=".json,application/json" style="display:none;">
+      </label>
+    </div>
+  </section>
+
+  <!-- Mobile RWD Quick Switcher -->
+  <div class="mobile-workspace-nav" role="tablist" aria-label="手機版工作區切換">
+    <button type="button" class="mobile-tab-btn" data-mobile-target="config" data-subtab="pet">1. 寵物</button>
+    <button type="button" class="mobile-tab-btn" data-mobile-target="config" data-subtab="look">2. 外觀</button>
+    <button type="button" class="mobile-tab-btn" data-mobile-target="config" data-subtab="behavior">3. 行為</button>
+    <button type="button" class="mobile-tab-btn active" data-mobile-target="preview">4. 預覽</button>
+    <button type="button" class="mobile-tab-btn" data-mobile-target="export">5. 匯出</button>
+  </div>
+
+  <!-- Main 3-Column Workstation -->
+  <main class="workstation-grid" id="workstationGrid" data-mobile-view="preview">
+    
+    <!-- LEFT PANEL: Pet Configuration -->
+    <aside class="panel-card panel-left" aria-label="寵物詳細設定">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          寵物製作設定
+        </div>
+      </div>
+
+      <!-- 6 Config Tabs -->
+      <div class="config-tabs" role="tablist">
+        <button type="button" class="config-tab active" data-tab="pet" role="tab">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg>
+          寵物
+        </button>
+        <button type="button" class="config-tab" data-tab="look" role="tab">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          外觀
+        </button>
+        <button type="button" class="config-tab" data-tab="behavior" role="tab">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          行為
+        </button>
+        <button type="button" class="config-tab" data-tab="position" role="tab">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          位置
+        </button>
+        <button type="button" class="config-tab" data-tab="interact" role="tab">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          互動
+        </button>
+        <button type="button" class="config-tab" data-tab="audio" role="tab">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          音效
+        </button>
+      </div>
+
+      <div class="config-body">
+        <!-- TAB 1: 寵物 -->
+        <div class="tab-pane active" id="tab-pet">
+          <div class="form-group">
+            <label class="form-label">選擇原創寵物種類</label>
+            <div class="species-cards">
+              <div class="species-card active" data-species="shiba">
+                <canvas id="thumb-shiba" width="48" height="48"></canvas>
+                <div class="species-name">柴犬</div>
+                <div class="species-tag">預設：咖呲</div>
+              </div>
+              <div class="species-card" data-species="cat">
+                <canvas id="thumb-cat" width="48" height="48"></canvas>
+                <div class="species-name">橘貓</div>
+                <div class="species-tag">伸懶腰/喵叫</div>
+              </div>
+              <div class="species-card" data-species="rabbit">
+                <canvas id="thumb-rabbit" width="48" height="48"></canvas>
+                <div class="species-name">小兔子</div>
+                <div class="species-tag">長耳跳跳</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="cfgPetName">寵物名稱</label>
+            <input type="text" id="cfgPetName" class="text-input" maxlength="20" value="咖呲" placeholder="請輸入寵物名字">
+            <span class="form-hint">用於互動選單「叫名字」與預設自我介紹台詞。</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">快速毛色樣式範本</label>
+            <div class="preset-swatches" id="speciesColorPresets"></div>
+          </div>
+        </div>
+
+        <!-- TAB 2: 外觀 -->
+        <div class="tab-pane" id="tab-look">
+          <div class="form-group">
+            <label class="form-label">
+              <span>角色尺寸大小</span>
+              <span id="lblSizeVal">96 px</span>
+            </label>
+            <div class="range-wrap">
+              <input type="range" id="cfgSize" min="64" max="144" step="8" value="96">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">毛色設定（主色／胸口與斑紋輔色）</label>
+            <div class="color-row">
+              <div class="color-picker-wrap">
+                <input type="color" id="cfgPrimaryColor" value="#E08E36" aria-label="毛色主色">
+                <span class="color-hex" id="lblPrimaryHex">#E08E36</span>
+              </div>
+              <div class="color-picker-wrap">
+                <input type="color" id="cfgSecondaryColor" value="#FFF7EB" aria-label="毛色輔色">
+                <span class="color-hex" id="lblSecondaryHex">#FFF7EB</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="cfgAccessory">原創角色穿戴配件</label>
+            <select id="cfgAccessory" class="select-input">
+              <option value="red-collar">紅色項圈（附金色鈴鐺）</option>
+              <option value="blue-collar">藍色項圈（附銀色名牌）</option>
+              <option value="bandana">唐草綠三角領巾</option>
+              <option value="hat">探險家黃色小帽</option>
+              <option value="none">無配件</option>
+            </select>
+            <span class="form-hint">配件會隨待機、走路、睡覺與轉向動作自動對齊。</span>
+          </div>
+
+          <div class="switch-row">
+            <span class="switch-label">顯示底部立體陰影</span>
+            <input type="checkbox" id="cfgShadow" class="toggle-checkbox" checked>
+          </div>
+        </div>
+
+        <!-- TAB 3: 行為 -->
+        <div class="tab-pane" id="tab-behavior">
+          <div class="form-group">
+            <label class="form-label" for="cfgPersonality">預設性格模式</label>
+            <select id="cfgPersonality" class="select-input">
+              <option value="balanced">平衡型（走動、休息與互動適中）</option>
+              <option value="lively">活潑型（常走動、小跑步、開心跳躍）</option>
+              <option value="lazy">慵懶型（常坐下休息、打盹睡覺）</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <span>走路移動速度</span>
+              <span id="lblWalkSpeed">55 px/s</span>
+            </label>
+            <div class="range-wrap">
+              <input type="range" id="cfgWalkSpeed" min="25" max="110" step="5" value="55">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <span>跑步移動速度</span>
+              <span id="lblRunSpeed">115 px/s</span>
+            </label>
+            <div class="range-wrap">
+              <input type="range" id="cfgRunSpeed" min="70" max="190" step="5" value="115">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <span>平均待機停留時間</span>
+              <span id="lblIdleTime">4.0 秒</span>
+            </label>
+            <div class="range-wrap">
+              <input type="range" id="cfgIdleTime" min="1.5" max="10" step="0.5" value="4.0">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <span>走動活躍頻率</span>
+              <span id="lblWalkFreq">65%</span>
+            </label>
+            <div class="range-wrap">
+              <input type="range" id="cfgWalkFreq" min="10" max="95" step="5" value="65">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <span>自動打盹睡覺機率</span>
+              <span id="lblSleepChance">25%</span>
+            </label>
+            <div class="range-wrap">
+              <input type="range" id="cfgSleepChance" min="0" max="80" step="5" value="25">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <span>動畫播放速度倍率</span>
+              <span id="lblAnimSpeed">1.0x</span>
+            </label>
+            <div class="range-wrap">
+              <input type="range" id="cfgAnimSpeed" min="0.5" max="1.8" step="0.1" value="1.0">
+            </div>
+          </div>
+
+          <div class="switch-row">
+            <span class="switch-label">啟用自主行為狀態機</span>
+            <input type="checkbox" id="cfgAutoBehavior" class="toggle-checkbox" checked>
+          </div>
+
+          <div class="switch-row">
+            <span class="switch-label">完全靜止模式（無障礙省電）</span>
+            <input type="checkbox" id="cfgStaticMode" class="toggle-checkbox">
+          </div>
+        </div>
+
+        <!-- TAB 4: 位置與手機 RWD -->
+        <div class="tab-pane" id="tab-position">
+          <div class="form-group">
+            <label class="form-label" for="cfgPositionMode">網站上的活動範圍模式</label>
+            <select id="cfgPositionMode" class="select-input">
+              <option value="bottom-roam">模式一：網頁底部自由走動</option>
+              <option value="corner-right">模式二：固定右下角小範圍活動</option>
+              <option value="corner-left">模式二：固定左下角小範圍活動</option>
+              <option value="custom">模式三：自訂拖曳位置（記憶相對比例）</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <span>距離瀏覽器底部高度</span>
+              <span id="lblBottomOffset">12 px</span>
+            </label>
+            <div class="range-wrap">
+              <input type="range" id="cfgBottomOffset" min="0" max="120" step="4" value="12">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <span>左右安全邊界距離</span>
+              <span id="lblEdgeMargin">20 px</span>
+            </label>
+            <div class="range-wrap">
+              <input type="range" id="cfgEdgeMargin" min="8" max="100" step="4" value="20">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="cfgZIndex">網站圖層 Z-Index（避免蓋住重要對話框）</label>
+            <input type="number" id="cfgZIndex" class="text-input" min="10" max="999999" value="9990">
+          </div>
+
+          <div class="form-group" style="padding-top:8px; border-top:1px solid var(--border);">
+            <label class="form-label" for="cfgMobileBehavior">手機版 RWD 顯示策略</label>
+            <select id="cfgMobileBehavior" class="select-input">
+              <option value="scale-down">桌面與手機皆顯示（手機自動縮小 80%）</option>
+              <option value="corner-only">手機版強制固定於角落</option>
+              <option value="both-normal">桌面與手機皆維持原尺寸</option>
+              <option value="desktop-only">只在桌面顯示（手機版自動隱藏）</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- TAB 5: 互動與文字泡泡 -->
+        <div class="tab-pane" id="tab-interact">
+          <div class="switch-row">
+            <span class="switch-label">允許點擊互動（搖尾／開心反應）</span>
+            <input type="checkbox" id="cfgEnableClick" class="toggle-checkbox" checked>
+          </div>
+          <div class="switch-row">
+            <span class="switch-label">允許滑鼠與手指拖曳移動寵物</span>
+            <input type="checkbox" id="cfgEnableDrag" class="toggle-checkbox" checked>
+          </div>
+          <div class="switch-row">
+            <span class="switch-label">允許在寵物身上滑動撫摸撒嬌</span>
+            <input type="checkbox" id="cfgEnablePetting" class="toggle-checkbox" checked>
+          </div>
+          <div class="switch-row">
+            <span class="switch-label">允許雙擊觸發開心跳躍轉圈</span>
+            <input type="checkbox" id="cfgEnableDblClick" class="toggle-checkbox" checked>
+          </div>
+          <div class="switch-row">
+            <span class="switch-label">顯示寵物旁小巧互動選單按鈕</span>
+            <input type="checkbox" id="cfgShowQuickMenu" class="toggle-checkbox" checked>
+          </div>
+          <div class="switch-row">
+            <span class="switch-label">顯示說話文字泡泡</span>
+            <input type="checkbox" id="cfgEnableBubble" class="toggle-checkbox" checked>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <span>文字泡泡自動出現頻率</span>
+              <span id="lblBubbleFreq">35%</span>
+            </label>
+            <div class="range-wrap">
+              <input type="range" id="cfgBubbleFreq" min="0" max="100" step="5" value="35">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">自訂說話句子（安全純文字跳脫）</label>
+            <div style="display:flex; gap:6px;">
+              <input type="text" id="inputNewPhrase" class="text-input" style="flex:1;" maxlength="40" placeholder="新增一句話，例如：今天也要開心！">
+              <button type="button" id="btnAddPhrase" class="btn btn-primary btn-sm">新增</button>
+            </div>
+            <div class="phrases-list" id="phrasesList"></div>
+          </div>
+        </div>
+
+        <!-- TAB 6: 音效 -->
+        <div class="tab-pane" id="tab-audio">
+          <div class="switch-row">
+            <span class="switch-label">啟用 Web Audio 原創合成音效</span>
+            <input type="checkbox" id="cfgAudioEnabled" class="toggle-checkbox" checked>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <span>音效音量大小</span>
+              <span id="lblAudioVolume">60%</span>
+            </label>
+            <div class="range-wrap">
+              <input type="range" id="cfgAudioVolume" min="0" max="100" step="5" value="60">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="cfgAudioPolicy">發聲時機限制（避免干擾網站訪客）</label>
+            <select id="cfgAudioPolicy" class="select-input">
+              <option value="interaction-only">僅在使用者點擊或互動時發聲（推薦預設）</option>
+              <option value="allow-autonomous">允許自主行動時偶爾輕微發聲</option>
+              <option value="muted">完全靜音</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">立即試聽原創音效</label>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button type="button" class="btn btn-sm" data-test-sound="voice">試聽寵物叫聲</button>
+              <button type="button" class="btn btn-sm" data-test-sound="happy">試聽開心音效</button>
+              <button type="button" class="btn btn-sm" data-test-sound="jump">試聽跳躍音效</button>
+              <button type="button" class="btn btn-sm" data-test-sound="wake">試聽睡醒音效</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER PANEL: Real Interactive Website Preview -->
+    <section class="panel-card panel-center" aria-label="即時互動網站預覽區">
+      <div class="preview-toolbar">
+        <div class="viewport-group" role="group" aria-label="切換預覽裝置尺寸">
+          <button type="button" class="vp-btn" data-vp-width="360" data-vp-height="600">手機直向 360px</button>
+          <button type="button" class="vp-btn" data-vp-width="390" data-vp-height="620">手機 390px</button>
+          <button type="button" class="vp-btn" data-vp-width="640" data-vp-height="360">手機橫向</button>
+          <button type="button" class="vp-btn" data-vp-width="768" data-vp-height="600">平板 768px</button>
+          <button type="button" class="vp-btn active" data-vp-width="100%" data-vp-height="600">桌面 1440px+</button>
+        </div>
+        <div class="status-pill" id="liveStateBadge">
+          <span class="status-dot"></span>
+          <span>目前狀態：<strong id="lblCurrentState">Idle (待機)</strong></span>
+        </div>
+      </div>
+
+      <div class="preview-stage-wrapper">
+        <div class="simulated-browser" id="simulatedBrowser">
+          <div class="browser-chrome">
+            <div class="browser-dots">
+              <span class="browser-dot"></span>
+              <span class="browser-dot"></span>
+              <span class="browser-dot"></span>
+            </div>
+            <div class="browser-address">https://your-website.example.com/ （可直接捲動頁面、點擊按鈕或拖曳下方寵物）</div>
+          </div>
+
+          <!-- Simulated Viewport -->
+          <div class="browser-viewport" id="simulatorViewport">
+            <div class="mock-site-scroll" id="mockSiteScroll">
+              <nav class="mock-nav">
+                <div class="mock-brand">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M9 9h6v6H9z"/></svg>
+                  DEMO 示範網站
+                </div>
+                <div class="mock-nav-links">
+                  <a href="#mock-features" class="mock-interactive-trigger" data-msg="點擊了導覽列「功能特色」連結">功能特色</a>
+                  <a href="#mock-articles" class="mock-interactive-trigger" data-msg="點擊了導覽列「最新文章」連結">最新文章</a>
+                  <a href="#mock-footer" class="mock-interactive-trigger" data-msg="點擊了導覽列「聯絡我們」連結">聯絡我們</a>
+                </div>
+              </nav>
+
+              <div class="mock-hero">
+                <h2>測試寵物在真實網頁中的互動與點擊穿透表現</h2>
+                <p>這是一個完整的模擬網站。你可以直接點擊下方按鈕、捲動頁面，或直接點擊、撫摸、雙擊、拖曳畫面底部的「<span id="mockHeroPetName">咖呲</span>」，驗證寵物不會阻擋網站原本的操作。</p>
+                <div class="mock-cta-row">
+                  <button type="button" class="btn btn-primary mock-interactive-trigger" data-msg="成功觸發網站「立即開始體驗」主按鈕">立即開始體驗</button>
+                  <button type="button" class="btn mock-interactive-trigger" data-msg="成功觸發網站「了解更多資訊」次要按鈕">了解更多資訊</button>
+                </div>
+                <div class="mock-log-banner" id="mockSiteLog">
+                  網站互動驗證：請點擊上方按鈕或下方寵物進行測試
+                </div>
+              </div>
+
+              <div class="mock-section" id="mock-features">
+                <h3>為什麼網站互動寵物需要 Pointer Events 穿透架構？</h3>
+                <div class="mock-cards-grid">
+                  <div class="mock-card">
+                    <h4>不阻擋網站按鈕點擊</h4>
+                    <p>只有寵物角色本體與小選單接收事件，其餘透明區域完全穿透。</p>
+                    <button type="button" class="btn btn-sm mock-interactive-trigger" data-msg="成功點擊卡片 A 按鈕">測試卡片按鈕 A</button>
+                  </div>
+                  <div class="mock-card">
+                    <h4>Shadow DOM 樣式隔離</h4>
+                    <p>寵物的 CSS 封裝於獨立 Shadow Root，絕不汙染網站原本的字型與排版。</p>
+                    <button type="button" class="btn btn-sm mock-interactive-trigger" data-msg="成功點擊卡片 B 按鈕">測試卡片按鈕 B</button>
+                  </div>
+                  <div class="mock-card">
+                    <h4>RWD 安全邊界保護</h4>
+                    <p>無論桌面縮放或切換手機直橫向，寵物都會自動保持在可視範圍內。</p>
+                    <button type="button" class="btn btn-sm mock-interactive-trigger" data-msg="成功點擊卡片 C 按鈕">測試卡片按鈕 C</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mock-section" id="mock-articles">
+                <h3>往下捲動測試底部固定表現</h3>
+                <p style="font-size:13px; color:#475569; margin-bottom:12px;">
+                  當你在這個模擬網頁中上下捲動時，寵物會穩定停留在視窗底部（或你指定的角落），不會因為捲動而消失。你也可以把寵物直接拖曳到卡片旁邊，放開後牠會自然受重力落回活動地面。
+                </p>
+                <div class="mock-cards-grid">
+                  <div class="mock-card">
+                    <h4>支援滑鼠撫摸手勢</h4>
+                    <p>在寵物身上左右輕滑，就能觸發撒嬌反應與愛心像素特效，且不影響正常頁面捲動。</p>
+                  </div>
+                  <div class="mock-card">
+                    <h4>背景頁籤智慧節能</h4>
+                    <p>當訪客切換到其他瀏覽器分頁時，動畫更新會自動降頻並限制時間步長，回到頁面時平順恢復。</p>
+                  </div>
+                </div>
+              </div>
+
+              <footer class="mock-footer" id="mock-footer">
+                <div>模擬網站頁尾區域 — 即使寵物站在頁尾上方，下方按鈕依然可以正常點擊：</div>
+                <div style="margin-top:8px;">
+                  <button type="button" class="btn btn-sm mock-interactive-trigger" data-msg="成功點擊頁尾「訂閱電子報」按鈕">訂閱電子報測試按鈕</button>
+                </div>
+              </footer>
+            </div>
+
+            <!-- Pet Engine Mounts Here Inside Simulator -->
+            <div class="simulator-pet-layer" id="simulatorPetMount"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: Action Triggers & Export Deliverables -->
+    <aside class="panel-card panel-right" aria-label="動作測試與嵌入碼匯出">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          動作控制與成果匯出
+        </div>
+      </div>
+
+      <div class="right-panel-body">
+        <div>
+          <div class="export-subtitle" style="margin-bottom:8px;">即時觸發寵物狀態測試</div>
+          <div class="action-grid">
+            <button type="button" class="btn btn-sm" data-force-state="idle">播放待機 (Idle)</button>
+            <button type="button" class="btn btn-sm" data-force-state="walk">播放走路 (Walk)</button>
+            <button type="button" class="btn btn-sm" data-force-state="run">播放跑步 (Run)</button>
+            <button type="button" class="btn btn-sm" data-force-state="sit">播放坐下 (Sit)</button>
+            <button type="button" class="btn btn-sm" data-force-state="sleep">播放睡覺 (Sleep)</button>
+            <button type="button" class="btn btn-sm" data-force-state="jump">播放跳躍 (Jump)</button>
+            <button type="button" class="btn btn-sm" data-force-state="happy">播放開心 (Happy)</button>
+            <button type="button" class="btn btn-sm" id="btnCallBackPet">叫回寵物</button>
+            <button type="button" class="btn btn-sm" id="btnResetPetPos">重設位置</button>
+            <button type="button" class="btn btn-sm" id="btnToggleHidePet">隱藏／叫出寵物</button>
+          </div>
+          <button type="button" class="btn btn-primary btn-sm" id="btnResumeAuto" style="width:100%; margin-top:8px;">
+            恢復自主行為模式
+          </button>
+        </div>
+
+        <!-- Deliverable 1: Standalone HTML -->
+        <div class="export-group">
+          <div class="export-subtitle">輸出一：獨立 HTML 預覽檔</div>
+          <p class="form-hint">包含完整示範網站、原創像素繪圖核心與目前設定，下載後直接雙擊即可在瀏覽器開啟執行。</p>
+          <button type="button" id="btnDownloadStandaloneHtml" class="btn btn-primary">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            下載獨立 HTML (.html)
+          </button>
+        </div>
+
+        <!-- Deliverable 2: Self-Contained Embed Code -->
+        <div class="export-group">
+          <div class="export-subtitle">輸出二：自包含網站嵌入程式碼</div>
+          <p class="form-hint">單一段程式碼即可放入任何 HTML 網站或區塊，零外部依賴。</p>
+          <div style="display:flex; gap:6px;">
+            <button type="button" id="btnGenerateEmbed" class="btn btn-primary btn-sm" style="flex:1;">產生／更新嵌入碼</button>
+            <button type="button" id="btnCopyEmbed" class="btn btn-sm">複製嵌入碼</button>
+            <button type="button" id="btnDownloadEmbedTxt" class="btn btn-sm">下載 .txt</button>
+          </div>
+          <textarea id="embedCodeOutput" class="code-box" readonly aria-label="產生的網站嵌入程式碼"></textarea>
+        </div>
+
+        <!-- Deliverable 3: Separate Kit Files -->
+        <div class="export-group">
+          <div class="export-subtitle">輸出三：完整獨立嵌入套件（3 檔案）</div>
+          <p class="form-hint">適合正式網站部署或日後擴充管理，可分別下載獨立執行檔與設定檔：</p>
+          <div style="display:grid; grid-template-columns: 1fr; gap:6px;">
+            <button type="button" id="btnDownloadEngineJs" class="btn btn-sm">
+              1. 下載 widgetpets.js（獨立執行核心）
+            </button>
+            <button type="button" id="btnDownloadConfigJson" class="btn btn-sm">
+              2. 下載 config.json（目前寵物設定檔）
+            </button>
+            <button type="button" id="btnDownloadExampleHtml" class="btn btn-sm">
+              3. 下載 example.html（外部載入示範頁）
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- SEO Documentation, WordPress Guide & Privacy Section -->
+  <section class="docs-container" id="docs-guide">
+    <article class="docs-card">
+      <h1>WidgetPets｜免費網站互動寵物產生器（柴犬咖呲、橘貓、小兔子網站嵌入工具）</h1>
+      <p>
+        <strong>WUMETAX WidgetPets</strong> 是由 WUMETAX Lab 開發的視覺化網站互動寵物製作工作站。不需要撰寫任何程式、不需要安裝 npm 或依賴外部圖庫，就能在幾分鐘內打造一隻具備<strong>待機呼吸、四足走動、小跑步、坐下休息、打盹睡覺、開心跳躍、滑鼠觸控撫摸與拖曳互動</strong>的原創 2D 像素寵物，並一鍵匯出可嵌入自己網站的 HTML／JavaScript 程式碼。
+      </p>
+      <div class="docs-grid" style="margin-top:16px;">
+        <div>
+          <h3>WidgetPets 網站互動寵物可以做什麼？</h3>
+          <ul>
+            <li><strong>賦予網站生命感</strong>：預設主角為可愛黃褐色柴犬「咖呲」，以及橘貓、長耳小兔子三種完整原創像素角色。</li>
+            <li><strong>自然自主行為系統</strong>：內建完整狀態機，會根據「慵懶型、平衡型、活潑型」性格自動在網站底部散步、坐下或打盹。</li>
+            <li><strong>豐富訪客互動</strong>：支援點擊搖尾巴、撫摸撒嬌、雙擊跳躍、拖曳換位、互動小選單與自訂歡迎文字泡泡。</li>
+            <li><strong>絕對安全隔離</strong>：匯出的元件採用 Shadow DOM 與局部 Pointer Events 設計，絕不影響原本網站的按鈕點擊、文字樣式與頁面捲動。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>如何製作並嵌入一般 HTML 網站？</h3>
+          <ol>
+            <li>在左側面板選擇寵物種類（柴犬、橘貓或小兔子）並為牠命名。</li>
+            <li>調整角色尺寸、毛色、穿戴配件（項圈、領巾、小帽）與活動範圍。</li>
+            <li>在中央模擬網站即時測試點擊、拖曳與手機版尺寸表現。</li>
+            <li>在右側點擊「複製嵌入碼」，將產生的程式碼貼到您網站 HTML 的 <code>&lt;/body&gt;</code> 標籤之前即可完成安裝。</li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <div class="docs-grid">
+      <article class="docs-card" id="wordpress-guide">
+        <h2>如何將 WidgetPets 放到 WordPress 網站？</h2>
+        <h3>方法一：使用 Gutenberg 自訂 HTML 區塊（適合快速測試）</h3>
+        <p>
+          您可以在 WordPress 文章、頁面或頁尾小工具中新增「自訂 HTML（Custom HTML）」區塊，並貼上右側產生的「自包含網站嵌入程式碼」。
+          <br><strong>重要安全提醒：</strong>部分 WordPress 網站基於使用者角色權限（例如非最高管理員）、多站點網路政策或資安外掛設定，可能會自動過濾或移除 <code>&lt;script&gt;</code> 標籤。因此我們不承諾任何受限制的 WordPress 區塊都能直接貼上執行。
+        </p>
+        <h3>方法二：載入獨立 widgetpets.js（推薦正式網站使用）</h3>
+        <p>對於正式營運的 WordPress 網站，建議下載右側的 <code>widgetpets.js</code> 上傳至您的網站媒體庫或佈景主題目錄，再透過佈景主題頁尾或程式碼片段管理工具載入：</p>
+        <pre class="code-snippet-block">&lt;script src="https://您的網域/路徑/widgetpets.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  window.WidgetPets.mount(您的寵物設定物件);
+&lt;/script&gt;</pre>
+        <h3>方法三：未來專屬 WordPress 外掛擴充</h3>
+        <p>WidgetPets 的執行核心已採用標準模組化介面（支援 <code>mount</code>、<code>updateConfig</code>、<code>destroy</code>），未來可直接銜接專屬 WordPress 外掛進行後台啟用、JSON 設定匯入與手機版顯示控制。</p>
+      </article>
+
+      <article class="docs-card">
+        <h2>常見問題 FAQ 與本機隱私安全說明</h2>
+        <h3>Q1：WidgetPets 是否免費？需要註冊登入嗎？</h3>
+        <p>完全免費，無須註冊帳號、無須登入，且匯出的寵物元件不會強制加入任何廣告或浮水印。</p>
+        <h3>Q2：支援手機版與平板 RWD 嗎？</h3>
+        <p>完整支援。您可以設定「桌面與手機都顯示（手機自動縮小）」、「手機強制固定角落」或「只在桌面顯示」，且手指拖曳寵物時不會卡住整頁滑動。</p>
+        <h3>Q3：我的設定資料或網站訪客資料會被上傳嗎？</h3>
+        <p>
+          <strong>純本機處理、零資料追蹤：</strong>
+          您在編輯器中儲存的專案與匯出的寵物位置記憶，皆僅儲存在瀏覽器本機的 <code>LocalStorage</code>（使用獨立命名空間 <code>wumetax_widgetpets_*</code> 避免衝突）。匯出的寵物元件不連線任何外部伺服器、不讀取 Cookie、不收集網站訪客個資或表單內容。
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div>© 2026 WUMETAX ｜ 由 <a href="https://wumetax.com/" target="_blank" rel="noopener" style="color:inherit; font-weight:600;">WUMETAX</a> 開發</div>
+    <div class="footer-links">
+      <a href="https://wumetax.com/" target="_blank" rel="noopener">WUMETAX 官方網站</a>
+      <a href="https://wumetax.com/lab/" target="_blank" rel="noopener">更多免費工具 WUMETAX Lab</a>
+      <a href="https://widgetpets.wumetax.com/">WidgetPets 首頁</a>
+    </div>
+  </footer>
+
+  <div id="toastMsg" class="toast-msg" role="status" aria-live="polite"></div>
+
+  <!-- =========================================================================
+       CORE ARCHITECTURE PART 1: STANDALONE WIDGETPETS ENGINE FACTORY
+       This entire factory function is 100% self-contained. It has zero references
+       to the editor DOM and is serialized directly into exported embeds & files.
+  ========================================================================== -->
+  <script>
+    const WidgetPetsCoreFactory = function() {
+      'use strict';
+
+      const DEFAULT_CONFIG = {
+        species: 'shiba',
+        name: '咖呲',
+        size: 96,
+        primaryColor: '#E08E36',
+        secondaryColor: '#FFF7EB',
+        accessory: 'red-collar',
+        shadow: true,
+        personality: 'balanced',
+        walkSpeed: 55,
+        runSpeed: 115,
+        idleTime: 4.0,
+        walkFreq: 65,
+        sleepChance: 25,
+        animSpeed: 1.0,
+        autoBehavior: true,
+        staticMode: false,
+        positionMode: 'bottom-roam',
+        bottomOffset: 12,
+        edgeMargin: 20,
+        zIndex: 9990,
+        customXRatio: 0.82,
+        customYRatio: 0.85,
+        mobileBehavior: 'scale-down',
+        enableClick: true,
+        enableDrag: true,
+        enablePetting: true,
+        enableDblClick: true,
+        showQuickMenu: true,
+        enableBubble: true,
+        bubbleFreq: 35,
+        phrases: [
+          '我是咖呲！',
+          '今天也要開心！',
+          '要摸摸嗎？',
+          '我去散步一下',
+          '先睡一下',
+          '汪！',
+          '歡迎來到這個網站'
+        ],
+        audioEnabled: true,
+        audioVolume: 60,
+        audioPolicy: 'interaction-only'
+      };
+
+      // Color utility for pixel shading
+      function shadeHexColor(hex, percent) {
+        if (!hex || typeof hex !== 'string' || !hex.startsWith('#') || hex.length !== 7) {
+          return '#888888';
+        }
+        let r = parseInt(hex.slice(1, 3), 16);
+        let g = parseInt(hex.slice(3, 5), 16);
+        let b = parseInt(hex.slice(5, 7), 16);
+        r = Math.min(255, Math.max(0, Math.round(r + (255 * percent) / 100)));
+        g = Math.min(255, Math.max(0, Math.round(g + (255 * percent) / 100)));
+        b = Math.min(255, Math.max(0, Math.round(b + (255 * percent) / 100)));
+        return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+      }
+
+      // Web Audio Synthesizer (No external MP3 required)
+      class PetSoundSynth {
+        constructor() {
+          this.ctx = null;
+          this.unlocked = false;
+          this.lastSoundAt = 0;
+        }
+
+        unlock() {
+          if (!this.ctx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) {
+              this.ctx = new AudioCtx();
+            }
+          }
+          if (this.ctx && this.ctx.state === 'suspended') {
+            this.ctx.resume().catch(() => {});
+          }
+          this.unlocked = true;
+        }
+
+        play(type, config, isUserInteraction) {
+          if (!config.audioEnabled || config.audioPolicy === 'muted') return;
+          if (!isUserInteraction && config.audioPolicy === 'interaction-only') return;
+
+          const nowMs = performance.now();
+          if (nowMs - this.lastSoundAt < 260) return; // Cooldown protection
+          this.lastSoundAt = nowMs;
+
+          if (isUserInteraction) this.unlock();
+          if (!this.ctx || this.ctx.state !== 'running') return;
+
+          const vol = Math.max(0, Math.min(1, (config.audioVolume || 60) / 100)) * 0.25;
+          if (vol <= 0.001) return;
+
+          const now = this.ctx.currentTime;
+
+          if (type === 'voice') {
+            if (config.species === 'shiba') {
+              // Shiba double bark "Wan!"
+              this._tone(340, 520, 0.09, now, vol, 'triangle');
+              this._tone(480, 260, 0.11, now + 0.09, vol * 0.85, 'triangle');
+            } else if (config.species === 'cat') {
+              // Cat soft "Meow~"
+              this._tone(520, 780, 0.16, now, vol * 0.8, 'sine');
+              this._tone(780, 490, 0.22, now + 0.16, vol * 0.7, 'sine');
+            } else {
+              // Rabbit cute squeak-hop
+              this._tone(680, 960, 0.07, now, vol * 0.65, 'sine');
+              this._tone(820, 1120, 0.07, now + 0.09, vol * 0.65, 'sine');
+            }
+          } else if (type === 'happy') {
+            this._tone(523.25, 659.25, 0.09, now, vol * 0.75, 'sine');
+            this._tone(659.25, 783.99, 0.14, now + 0.09, vol * 0.8, 'sine');
+          } else if (type === 'jump') {
+            this._tone(280, 660, 0.16, now, vol * 0.7, 'sine');
+          } else if (type === 'land') {
+            this._tone(190, 110, 0.07, now, vol * 0.5, 'triangle');
+          } else if (type === 'wake') {
+            this._tone(400, 540, 0.1, now, vol * 0.6, 'sine');
+            this._tone(540, 720, 0.14, now + 0.11, vol * 0.65, 'sine');
+          }
+        }
+
+        _tone(startFreq, endFreq, duration, startTime, gainVal, waveType) {
+          try {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = waveType || 'sine';
+            osc.frequency.setValueAtTime(startFreq, startTime);
+            osc.frequency.exponentialRampToValueAtTime(Math.max(40, endFreq), startTime + duration);
+
+            gain.gain.setValueAtTime(0.001, startTime);
+            gain.gain.linearRampToValueAtTime(gainVal, startTime + 0.015);
+            gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(startTime);
+            osc.stop(startTime + duration + 0.02);
+          } catch (e) {}
+        }
+      }
+
+      // Crisp 2D Pixel Art Procedural Sprite Renderer (32x32 virtual grid)
+      class PixelPetArtist {
+        static draw(ctx, canvasWidth, canvasHeight, config, animState) {
+          ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+          const grid = 32;
+          const scale = canvasWidth / grid;
+
+          const pColor = config.primaryColor || '#E08E36';
+          const pDark = shadeHexColor(pColor, -16);
+          const pLight = shadeHexColor(pColor, 14);
+          const sColor = config.secondaryColor || '#FFF7EB';
+          const sDark = shadeHexColor(sColor, -10);
+          const outline = '#231B18';
+          const noseBlack = '#1A1412';
+          const blushPink = '#F48FB1';
+          const tonguePink = '#EC407A';
+
+          const state = animState.state;
+          const frame = animState.frame;
+          const dir = animState.direction; // 1 = right, -1 = left
+
+          // Ground Shadow
+          if (config.shadow) {
+            ctx.fillStyle = 'rgba(17, 24, 39, 0.18)';
+            const shadowY = 29;
+            const jumpScale = state === 'jump' ? 0.72 : 1;
+            const sw = Math.round(18 * jumpScale);
+            const sx = Math.round((32 - sw) / 2);
+            ctx.fillRect(sx * scale, shadowY * scale, sw * scale, 2 * scale);
+            ctx.fillRect((sx + 2) * scale, (shadowY - 1) * scale, (sw - 4) * scale, 4 * scale);
+          }
+
+          ctx.save();
+          if (dir === -1) {
+            ctx.translate(canvasWidth, 0);
+            ctx.scale(-1, 1);
+          }
+
+          const px = (x, y, w, h, color) => {
+            ctx.fillStyle = color;
+            ctx.fillRect(Math.round(x * scale), Math.round(y * scale), Math.ceil(w * scale), Math.ceil(h * scale));
+          };
+
+          // Subtle breathing & gait vertical offset
+          let bobY = 0;
+          if (state === 'idle' || state === 'sit') {
+            bobY = (frame % 2 === 1) ? 1 : 0;
+          } else if (state === 'walk') {
+            bobY = (frame % 2 === 1) ? -1 : 0;
+          } else if (state === 'run') {
+            bobY = (frame % 2 === 0) ? -1 : 1;
+          } else if (state === 'happy' || state === 'react') {
+            bobY = (frame % 2 === 0) ? -1 : 0;
+          } else if (state === 'drag') {
+            bobY = -2;
+          }
+
+          const species = config.species || 'shiba';
+
+          if (state === 'sleep') {
+            this._drawSleepingPet(px, species, pColor, pDark, sColor, outline, noseBlack, frame, config.accessory);
+          } else {
+            if (species === 'shiba') {
+              this._drawShiba(px, state, frame, bobY, pColor, pDark, pLight, sColor, sDark, outline, noseBlack, blushPink, tonguePink, config.accessory, animState.blink);
+            } else if (species === 'cat') {
+              this._drawCat(px, state, frame, bobY, pColor, pDark, pLight, sColor, sDark, outline, noseBlack, blushPink, tonguePink, config.accessory, animState.blink);
+            } else {
+              this._drawRabbit(px, state, frame, bobY, pColor, pDark, pLight, sColor, sDark, outline, noseBlack, blushPink, tonguePink, config.accessory, animState.blink);
+            }
+          }
+
+          ctx.restore();
+
+          // Non-emoji pixel effects (Floating Zzz pixels when sleeping or pixel heart when happy/petted)
+          if (state === 'sleep') {
+            this._drawSleepPixels(ctx, scale, animState.effectTick);
+          } else if (state === 'happy' || state === 'react' || animState.pettingActive) {
+            this._drawHeartPixels(ctx, scale, animState.effectTick);
+          }
+        }
+
+        static _drawShiba(px, state, frame, bobY, pColor, pDark, pLight, sColor, sDark, outline, noseBlack, blushPink, tonguePink, accessory, isBlink) {
+          const isSit = state === 'sit';
+          const bodyY = (isSit ? 17 : 16) + bobY;
+          const headY = (isSit ? 6 : 6) + bobY;
+
+          // 1. Curled Shiba Tail (Signature curled fluffy ring on back-left)
+          const tailWag = (state === 'happy' || state === 'react' || state === 'walk' || state === 'run') ? (frame % 2 === 0 ? -1 : 1) : 0;
+          const tx = 4 + (tailWag > 0 ? 1 : 0);
+          const ty = bodyY - 5 + (tailWag < 0 ? -1 : 0);
+          px(tx, ty, 5, 5, outline);
+          px(tx + 1, ty + 1, 3, 3, pColor);
+          px(tx + 1, ty + 1, 2, 1, sColor); // White tip on curled tail
+          px(tx + 2, ty + 2, 1, 1, outline); // Inner curl hole
+
+          // 2. Legs (4 sturdy short legs with white paws)
+          if (isSit) {
+            // Sitting hind legs tucked, front legs straight
+            px(7, 22, 5, 6, outline);
+            px(8, 22, 3, 5, pDark);
+            px(8, 26, 4, 2, sColor);
+            px(17, 21, 4, 7, outline);
+            px(18, 21, 2, 5, pColor);
+            px(18, 26, 3, 2, sColor);
+          } else if (state === 'drag') {
+            // Dangling legs when picked up
+            const swing = frame % 2 === 0 ? 1 : -1;
+            px(8 + swing, 23, 3, 6, outline);
+            px(9 + swing, 23, 2, 4, pDark);
+            px(9 + swing, 27, 2, 2, sColor);
+            px(18 - swing, 23, 3, 6, outline);
+            px(19 - swing, 23, 2, 4, pColor);
+            px(19 - swing, 27, 2, 2, sColor);
+          } else {
+            // Walking / Running / Idle / Jump 4-leg gait
+            const step = (state === 'walk' || state === 'run') ? (frame % 4) : 0;
+            const lBackOff = (step === 1) ? -2 : (step === 3 ? 1 : 0);
+            const rBackOff = (step === 3) ? -2 : (step === 1 ? 1 : 0);
+            const lFrontOff = (step === 2) ? -2 : (step === 0 && state !== 'idle' ? 1 : 0);
+            const rFrontOff = (step === 0 && state !== 'idle') ? -2 : (step === 2 ? 1 : 0);
+
+            // Far legs (darker shade)
+            px(8 + lBackOff, 23, 3, 5, outline);
+            px(9 + lBackOff, 23, 2, 3, pDark);
+            px(9 + lBackOff, 26, 2, 2, sDark);
+
+            px(16 + lFrontOff, 23, 3, 5, outline);
+            px(17 + lFrontOff, 23, 2, 3, pDark);
+            px(17 + lFrontOff, 26, 2, 2, sDark);
+
+            // Near legs
+            px(10 + rBackOff, 23, 3, 6, outline);
+            px(11 + rBackOff, 23, 2, 4, pColor);
+            px(11 + rBackOff, 27, 2, 2, sColor);
+
+            px(19 + rFrontOff, 23, 3, 6, outline);
+            px(20 + rFrontOff, 23, 2, 4, pColor);
+            px(20 + rFrontOff, 27, 2, 2, sColor);
+          }
+
+          // 3. Torso / Body with cream chest (Urajiro)
+          if (isSit) {
+            px(7, bodyY, 14, 9, outline);
+            px(8, bodyY + 1, 12, 7, pColor);
+            px(8, bodyY + 1, 4, 6, pDark);
+            px(15, bodyY + 2, 5, 6, sColor); // Cream chest
+          } else {
+            px(7, bodyY, 16, 8, outline);
+            px(8, bodyY + 1, 14, 6, pColor);
+            px(8, bodyY + 1, 10, 2, pLight); // Back highlight
+            px(10, bodyY + 5, 8, 2, sDark);  // Belly cream
+            px(18, bodyY + 2, 4, 5, sColor); // Chest white fur
+          }
+
+          // 4. Head (Cute Q-version Shiba proportion with urajiro white cheeks & eyebrow dots)
+          px(12, headY, 14, 11, outline);
+          px(11, headY + 2, 16, 8, outline);
+          px(13, headY + 1, 12, 9, pColor);
+          px(12, headY + 3, 14, 6, pColor);
+
+          // Triangular Erect Shiba Ears
+          const earTwitch = (state === 'idle' && frame === 3) ? 1 : 0;
+          // Left Ear
+          px(13, headY - 4 + earTwitch, 4, 4, outline);
+          px(14, headY - 3 + earTwitch, 2, 3, pColor);
+          px(14, headY - 2 + earTwitch, 1, 2, sColor);
+          // Right Ear
+          px(21, headY - 4, 4, 4, outline);
+          px(22, headY - 3, 2, 3, pColor);
+          px(22, headY - 2, 1, 2, sColor);
+
+          // Shiba signature white eyebrow spots (Maru-mayu)
+          px(16, headY + 2, 2, 1, sColor);
+          px(22, headY + 2, 2, 1, sColor);
+
+          // White muzzle & cheeks (Urajiro pattern)
+          px(13, headY + 6, 13, 4, sColor);
+          px(15, headY + 5, 11, 4, sColor);
+          px(25, headY + 5, 2, 4, outline); // Snout front edge
+          px(24, headY + 6, 2, 3, sColor);
+
+          // Eyes
+          if (state === 'happy' || state === 'react') {
+            // Happy curved eyes ^ ^
+            px(16, headY + 4, 2, 1, noseBlack);
+            px(22, headY + 4, 2, 1, noseBlack);
+            px(14, headY + 6, 2, 1, blushPink);
+            px(23, headY + 6, 2, 1, blushPink);
+          } else if (isBlink) {
+            px(16, headY + 4, 2, 1, noseBlack);
+            px(22, headY + 4, 2, 1, noseBlack);
+          } else {
+            px(16, headY + 3, 2, 2, noseBlack);
+            px(16, headY + 3, 1, 1, '#FFFFFF'); // Eye shine
+            px(22, headY + 3, 2, 2, noseBlack);
+            px(22, headY + 3, 1, 1, '#FFFFFF');
+          }
+
+          // Small black nose & smiling mouth / occasional tongue
+          px(24, headY + 4, 2, 2, noseBlack);
+          px(20, headY + 7, 3, 1, noseBlack);
+          if (state === 'happy' || state === 'run' || (state === 'idle' && frame === 2)) {
+            px(21, headY + 8, 2, 2, tonguePink); // Cute pink tongue
+          }
+
+          // 5. Accessories
+          this._drawAccessory(px, accessory, headY, bodyY);
+        }
+
+        static _drawCat(px, state, frame, bobY, pColor, pDark, pLight, sColor, sDark, outline, noseBlack, blushPink, tonguePink, accessory, isBlink) {
+          const isSit = state === 'sit';
+          const bodyY = (isSit ? 17 : 16) + bobY;
+          const headY = 6 + bobY;
+
+          // Long swaying cat tail
+          const sway = (frame % 2 === 0) ? 0 : 1;
+          px(4, bodyY - 6 + sway, 3, 7, outline);
+          px(5, bodyY - 5 + sway, 1, 6, pColor);
+          px(4, bodyY - 6 + sway, 2, 2, pDark); // Tabby tail tip
+
+          // Cat legs
+          const step = (state === 'walk' || state === 'run') ? (frame % 4) : 0;
+          const offA = (step === 1) ? -1 : (step === 3 ? 1 : 0);
+          const offB = (step === 2) ? -1 : 0;
+          px(9 + offA, 23, 3, 6, outline);
+          px(10 + offA, 23, 1, 4, pColor);
+          px(10 + offA, 27, 2, 2, sColor);
+          px(19 + offB, 23, 3, 6, outline);
+          px(20 + offB, 23, 1, 4, pColor);
+          px(20 + offB, 27, 2, 2, sColor);
+
+          // Cat torso with tabby stripes
+          px(7, bodyY, 15, 8, outline);
+          px(8, bodyY + 1, 13, 6, pColor);
+          px(10, bodyY + 1, 2, 3, pDark); // Tabby stripe 1
+          px(14, bodyY + 1, 2, 3, pDark); // Tabby stripe 2
+          px(17, bodyY + 3, 4, 4, sColor);
+
+          // Cat head
+          px(12, headY + 1, 13, 10, outline);
+          px(13, headY + 2, 11, 8, pColor);
+          px(18, headY + 2, 2, 2, pDark); // Forehead tabby M mark
+
+          // Pointed Cat Ears
+          px(12, headY - 3, 4, 4, outline);
+          px(13, headY - 2, 2, 3, pColor);
+          px(14, headY - 1, 1, 2, blushPink);
+          px(21, headY - 3, 4, 4, outline);
+          px(22, headY - 2, 2, 3, pColor);
+          px(22, headY - 1, 1, 2, blushPink);
+
+          // Whiskers & face
+          px(14, headY + 6, 10, 3, sColor);
+          px(11, headY + 6, 2, 1, outline); // Whisker left
+          px(25, headY + 6, 2, 1, outline); // Whisker right
+
+          if (state === 'happy' || state === 'react' || isBlink) {
+            px(15, headY + 5, 2, 1, noseBlack);
+            px(21, headY + 5, 2, 1, noseBlack);
+          } else {
+            px(15, headY + 4, 2, 2, '#10B981'); // Emerald cat eyes
+            px(16, headY + 4, 1, 2, noseBlack);
+            px(21, headY + 4, 2, 2, '#10B981');
+            px(22, headY + 4, 1, 2, noseBlack);
+          }
+          px(19, headY + 6, 2, 1, tonguePink); // Pink cat nose
+
+          this._drawAccessory(px, accessory, headY, bodyY);
+        }
+
+        static _drawRabbit(px, state, frame, bobY, pColor, pDark, pLight, sColor, sDark, outline, noseBlack, blushPink, tonguePink, accessory, isBlink) {
+          const hopY = (state === 'walk' || state === 'run') && (frame % 2 === 1) ? -2 : bobY;
+          const bodyY = 17 + hopY;
+          const headY = 8 + hopY;
+
+          // Fluffy round cotton tail
+          px(5, bodyY + 2, 4, 4, outline);
+          px(6, bodyY + 3, 2, 2, sColor);
+
+          // Rabbit feet
+          px(9, 24 + hopY, 5, 4, outline);
+          px(10, 25 + hopY, 4, 2, sColor);
+          px(18, 24 + hopY, 4, 4, outline);
+          px(19, 25 + hopY, 3, 2, sColor);
+
+          // Plump round rabbit body
+          px(7, bodyY, 14, 8, outline);
+          px(8, bodyY + 1, 12, 6, pColor);
+          px(16, bodyY + 2, 4, 5, sColor);
+
+          // Head
+          px(13, headY, 12, 9, outline);
+          px(14, headY + 1, 10, 7, pColor);
+          px(15, headY + 5, 9, 3, sColor);
+
+          // Long upright bunny ears
+          const earFold = (state === 'idle' && frame === 2) ? 1 : 0;
+          px(14, headY - 7 + earFold, 3, 7, outline);
+          px(15, headY - 6 + earFold, 1, 6, pColor);
+          px(15, headY - 5 + earFold, 1, 4, blushPink);
+
+          px(19, headY - 7, 3, 7, outline);
+          px(20, headY - 6, 1, 6, pColor);
+          px(20, headY - 5, 1, 4, blushPink);
+
+          // Bunny eyes & twitching pink nose
+          if (state === 'happy' || state === 'react' || isBlink) {
+            px(16, headY + 4, 2, 1, noseBlack);
+            px(21, headY + 4, 2, 1, noseBlack);
+          } else {
+            px(16, headY + 3, 2, 2, '#B91C1C');
+            px(16, headY + 3, 1, 1, '#FFFFFF');
+            px(21, headY + 3, 2, 2, '#B91C1C');
+            px(21, headY + 3, 1, 1, '#FFFFFF');
+          }
+          px(23, headY + 5, 2, 1, blushPink);
+
+          this._drawAccessory(px, accessory, headY, bodyY);
+        }
+
+        static _drawSleepingPet(px, species, pColor, pDark, sColor, outline, noseBlack, frame, accessory) {
+          const breath = (frame % 2 === 0) ? 0 : 1;
+          const y = 20 + breath;
+
+          // Curled sleeping body
+          px(6, y, 20, 8 - breath, outline);
+          px(7, y + 1, 18, 6 - breath, pColor);
+          px(8, y + 1, 8, 3, pDark);
+          px(16, y + 4 - breath, 8, 3, sColor);
+
+          // Ears while sleeping
+          if (species === 'rabbit') {
+            px(13, y - 3, 6, 3, outline);
+            px(14, y - 2, 4, 2, pColor);
+          } else {
+            px(15, y - 3, 4, 3, outline);
+            px(16, y - 2, 2, 2, pColor);
+            px(21, y - 3, 4, 3, outline);
+            px(22, y - 2, 2, 2, pColor);
+          }
+
+          // Closed peaceful eyes
+          px(17, y + 3, 2, 1, noseBlack);
+          px(22, y + 3, 2, 1, noseBlack);
+          px(24, y + 4, 2, 1, noseBlack);
+
+          if (accessory === 'red-collar') {
+            px(14, y + 2, 2, 5, '#EF4444');
+          } else if (accessory === 'blue-collar') {
+            px(14, y + 2, 2, 5, '#3B82F6');
+          }
+        }
+
+        static _drawAccessory(px, accessory, headY, bodyY) {
+          if (!accessory || accessory === 'none') return;
+          if (accessory === 'red-collar') {
+            px(13, bodyY - 1, 9, 2, '#DC2626');
+            px(20, bodyY, 2, 2, '#FBBF24'); // Gold bell
+          } else if (accessory === 'blue-collar') {
+            px(13, bodyY - 1, 9, 2, '#2563EB');
+            px(20, bodyY, 2, 2, '#E5E7EB'); // Silver tag
+          } else if (accessory === 'bandana') {
+            px(13, bodyY - 1, 9, 2, '#059669');
+            px(17, bodyY + 1, 4, 2, '#059669');
+            px(18, bodyY + 3, 2, 1, '#059669');
+            px(16, bodyY, 1, 1, '#FFFFFF');
+            px(19, bodyY + 1, 1, 1, '#FFFFFF');
+          } else if (accessory === 'hat') {
+            px(15, headY - 3, 7, 3, '#D97706');
+            px(13, headY - 1, 11, 1, '#F59E0B');
+            px(15, headY - 2, 7, 1, '#EF4444');
+          }
+        }
+
+        static _drawSleepPixels(ctx, scale, tick) {
+          ctx.fillStyle = '#3B82F6';
+          const phase = Math.floor(tick / 20) % 3;
+          const drawZ = (gx, gy) => {
+            ctx.fillRect(gx * scale, gy * scale, 3 * scale, 1 * scale);
+            ctx.fillRect((gx + 1) * scale, (gy + 1) * scale, 1 * scale, 1 * scale);
+            ctx.fillRect(gx * scale, (gy + 2) * scale, 3 * scale, 1 * scale);
+          };
+          if (phase >= 0) drawZ(23, 12);
+          if (phase >= 1) drawZ(26, 8);
+          if (phase >= 2) drawZ(28, 4);
+        }
+
+        static _drawHeartPixels(ctx, scale, tick) {
+          const floatY = (Math.floor(tick / 10) % 2 === 0) ? 0 : -1;
+          const hx = 24;
+          const hy = 3 + floatY;
+          ctx.fillStyle = '#EF4444';
+          ctx.fillRect((hx + 1) * scale, hy * scale, 1 * scale, 1 * scale);
+          ctx.fillRect((hx + 3) * scale, hy * scale, 1 * scale, 1 * scale);
+          ctx.fillRect(hx * scale, (hy + 1) * scale, 5 * scale, 2 * scale);
+          ctx.fillRect((hx + 1) * scale, (hy + 3) * scale, 3 * scale, 1 * scale);
+          ctx.fillRect((hx + 2) * scale, (hy + 4) * scale, 1 * scale, 1 * scale);
+        }
+      }
+
+      // Main Runtime Widget Instance Class
+      class WidgetPetRuntime {
+        constructor(userConfig, options = {}) {
+          this.options = options;
+          this.container = options.container || document.body;
+          this.isPreview = Boolean(options.isPreview);
+          this.storageKey = options.storageKey || 'wumetax_widgetpets_runtime_v1';
+
+          this.config = Object.assign({}, DEFAULT_CONFIG, userConfig || {});
+          this.sound = new PetSoundSynth();
+
+          // Animation & Physics State
+          this.state = 'idle';
+          this.direction = 1;
+          this.frame = 0;
+          this.frameTimer = 0;
+          this.stateTimer = 0;
+          this.stateDuration = 3.5;
+          this.effectTick = 0;
+          this.blink = false;
+          this.blinkTimer = 0;
+
+          // Coordinates inside viewport/container
+          this.x = 120;
+          this.y = 0;
+          this.groundY = 0;
+          this.vy = 0;
+          this.targetX = null;
+
+          // Interaction State
+          this.isDragging = false;
+          this.dragStartX = 0;
+          this.dragStartY = 0;
+          this.pointerDownX = 0;
+          this.pointerDownY = 0;
+          this.hasMovedDuringPointer = false;
+          this.pettingDistance = 0;
+          this.pettingActive = false;
+          this.pettingCooldown = 0;
+          this.clickCount = 0;
+          this.lastClickTime = 0;
+          this.isHidden = false;
+          this.menuOpen = false;
+          this.bubbleTimer = 0;
+          this.bubbleCooldown = 6;
+          this.reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+          this._rafId = null;
+          this._lastTs = 0;
+          this._boundHandlers = {};
+
+          this._loadSavedPosition();
+          this._mountShadowDOM();
+          this._recalcBounds(true);
+          this._bindEvents();
+          this._startLoop();
+        }
+
+        _loadSavedPosition() {
+          if (this.isPreview) return;
+          try {
+            const raw = localStorage.getItem(this.storageKey);
+            if (raw) {
+              const data = JSON.parse(raw);
+              if (typeof data.customXRatio === 'number') {
+                this.config.customXRatio = Math.max(0.05, Math.min(0.95, data.customXRatio));
+              }
+              if (typeof data.isHidden === 'boolean') {
+                this.isHidden = data.isHidden;
+              }
+            }
+          } catch (e) {}
+        }
+
+        _savePositionState() {
+          if (this.isPreview) return;
+          try {
+            localStorage.setItem(this.storageKey, JSON.stringify({
+              customXRatio: this.config.customXRatio,
+              isHidden: this.isHidden
+            }));
+          } catch (e) {}
+        }
+
+        _mountShadowDOM() {
+          this.hostEl = document.createElement('div');
+          this.hostEl.setAttribute('data-wumetax-widgetpet', 'true');
+          const posType = this.isPreview ? 'absolute' : 'fixed';
+          this.hostEl.style.cssText = `position:${posType};inset:0;pointer-events:none;overflow:hidden;z-index:${Number(this.config.zIndex) || 9990};`;
+
+          this.shadow = this.hostEl.attachShadow({ mode: 'open' });
+          const styleEl = document.createElement('style');
+          styleEl.textContent = `
+            :host {
+              all: initial;
+              font-family: 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+            }
+            .wp-stage {
+              position: absolute;
+              inset: 0;
+              pointer-events: none;
+              overflow: hidden;
+            }
+            .wp-actor {
+              position: absolute;
+              left: 0;
+              top: 0;
+              pointer-events: auto;
+              touch-action: none;
+              user-select: none;
+              -webkit-user-select: none;
+              cursor: grab;
+              will-change: transform;
+            }
+            .wp-actor:active {
+              cursor: grabbing;
+            }
+            .wp-actor.wp-hidden {
+              display: none !important;
+            }
+            .wp-canvas {
+              display: block;
+              image-rendering: pixelated;
+              image-rendering: crisp-edges;
+            }
+            /* Speech Bubble */
+            .wp-bubble {
+              position: absolute;
+              bottom: calc(100% + 6px);
+              left: 50%;
+              transform: translateX(-50%);
+              background: #111827;
+              color: #FFFFFF;
+              font-size: 12px;
+              line-height: 1.35;
+              padding: 6px 10px;
+              border-radius: 8px;
+              white-space: nowrap;
+              max-width: 190px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+              pointer-events: none;
+              opacity: 0;
+              transition: opacity 0.18s ease, transform 0.18s ease;
+            }
+            .wp-bubble.wp-visible {
+              opacity: 1;
+            }
+            .wp-bubble::after {
+              content: '';
+              position: absolute;
+              top: 100%;
+              left: 50%;
+              margin-left: -5px;
+              border-width: 5px;
+              border-style: solid;
+              border-color: #111827 transparent transparent transparent;
+            }
+            /* Quick Action Trigger Button */
+            .wp-menu-trigger {
+              position: absolute;
+              top: -4px;
+              right: -4px;
+              width: 22px;
+              height: 22px;
+              border-radius: 50%;
+              border: 1px solid #E5E7EB;
+              background: #FFFFFF;
+              color: #111827;
+              font-size: 11px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+              opacity: 0;
+              transition: opacity 0.15s;
+              padding: 0;
+            }
+            .wp-actor:hover .wp-menu-trigger,
+            .wp-menu-trigger:focus-visible,
+            .wp-actor.wp-menu-open .wp-menu-trigger {
+              opacity: 1;
+            }
+            /* Compact Context Menu */
+            .wp-menu {
+              position: absolute;
+              bottom: calc(100% + 8px);
+              left: 50%;
+              transform: translateX(-50%);
+              background: #FFFFFF;
+              border: 1px solid #E5E7EB;
+              border-radius: 8px;
+              padding: 4px;
+              display: none;
+              flex-direction: column;
+              gap: 2px;
+              min-width: 108px;
+              box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+              z-index: 5;
+            }
+            .wp-menu.wp-open {
+              display: flex;
+            }
+            .wp-menu-btn {
+              border: none;
+              background: transparent;
+              text-align: left;
+              padding: 5px 8px;
+              font-size: 12px;
+              color: #111827;
+              border-radius: 5px;
+              cursor: pointer;
+              font-family: inherit;
+              white-space: nowrap;
+            }
+            .wp-menu-btn:hover,
+            .wp-menu-btn:focus-visible {
+              background: #EFF6FF;
+              color: #2563EB;
+              outline: none;
+            }
+            /* Recall Pill when hidden */
+            .wp-recall-btn {
+              position: absolute;
+              bottom: 14px;
+              right: 14px;
+              pointer-events: auto;
+              background: #111827;
+              color: #FFFFFF;
+              border: 1px solid #374151;
+              border-radius: 999px;
+              padding: 6px 12px;
+              font-size: 12px;
+              font-family: inherit;
+              cursor: pointer;
+              box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+              display: none;
+              align-items: center;
+              gap: 6px;
+            }
+            .wp-recall-btn.wp-visible {
+              display: inline-flex;
+            }
+            .wp-recall-dot {
+              width: 7px;
+              height: 7px;
+              border-radius: 50%;
+              background: #3B82F6;
+            }
+          `;
+
+          this.stageEl = document.createElement('div');
+          this.stageEl.className = 'wp-stage';
+
+          this.actorEl = document.createElement('div');
+          this.actorEl.className = 'wp-actor';
+          this.actorEl.setAttribute('role', 'region');
+          this.actorEl.setAttribute('aria-label', `互動寵物 ${this.config.name}`);
+
+          this.bubbleEl = document.createElement('div');
+          this.bubbleEl.className = 'wp-bubble';
+
+          this.menuTriggerBtn = document.createElement('button');
+          this.menuTriggerBtn.type = 'button';
+          this.menuTriggerBtn.className = 'wp-menu-trigger';
+          this.menuTriggerBtn.setAttribute('aria-label', '開啟寵物互動選單');
+          this.menuTriggerBtn.textContent = '•••';
+
+          this.menuEl = document.createElement('div');
+          this.menuEl.className = 'wp-menu';
+          this.menuEl.setAttribute('role', 'menu');
+
+          const menuItems = [
+            { action: 'pet', label: '摸摸' },
+            { action: 'callName', label: '叫名字' },
+            { action: 'sit', label: '坐下' },
+            { action: 'sleep', label: '睡覺' },
+            { action: 'callBack', label: '叫回來' },
+            { action: 'hide', label: '暫時隱藏' }
+          ];
+
+          menuItems.forEach(item => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'wp-menu-btn';
+            btn.setAttribute('role', 'menuitem');
+            btn.dataset.action = item.action;
+            btn.textContent = item.label;
+            this.menuEl.appendChild(btn);
+          });
+
+          this.canvas = document.createElement('canvas');
+          this.canvas.className = 'wp-canvas';
+          this.ctx = this.canvas.getContext('2d');
+
+          this.recallBtn = document.createElement('button');
+          this.recallBtn.type = 'button';
+          this.recallBtn.className = 'wp-recall-btn';
+          const dot = document.createElement('span');
+          dot.className = 'wp-recall-dot';
+          this.recallLabel = document.createElement('span');
+          this.recallLabel.textContent = `叫出 ${this.config.name}`;
+          this.recallBtn.appendChild(dot);
+          this.recallBtn.appendChild(this.recallLabel);
+
+          this.actorEl.appendChild(this.bubbleEl);
+          this.actorEl.appendChild(this.menuEl);
+          this.actorEl.appendChild(this.menuTriggerBtn);
+          this.actorEl.appendChild(this.canvas);
+
+          this.stageEl.appendChild(this.actorEl);
+          this.stageEl.appendChild(this.recallBtn);
+          this.shadow.appendChild(styleEl);
+          this.shadow.appendChild(this.stageEl);
+          this.container.appendChild(this.hostEl);
+
+          this._syncCanvasResolution();
+          this._syncVisibilityUI();
+        }
+
+        _getEffectiveSize() {
+          const base = Number(this.config.size) || 96;
+          const bounds = this._getStageRect();
+          const isMobileWidth = bounds.width <= 520;
+          if (isMobileWidth && this.config.mobileBehavior === 'scale-down') {
+            return Math.max(56, Math.round(base * 0.8));
+          }
+          return base;
+        }
+
+        _syncCanvasResolution() {
+          const displaySize = this._getEffectiveSize();
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          this.canvas.style.width = displaySize + 'px';
+          this.canvas.style.height = displaySize + 'px';
+          this.canvas.width = Math.round(displaySize * dpr);
+          this.canvas.height = Math.round(displaySize * dpr);
+          this.actorEl.style.width = displaySize + 'px';
+          this.actorEl.style.height = displaySize + 'px';
+          this.menuTriggerBtn.style.display = this.config.showQuickMenu ? 'flex' : 'none';
+        }
+
+        _getStageRect() {
+          if (this.isPreview && this.container) {
+            return {
+              width: this.container.clientWidth || 800,
+              height: this.container.clientHeight || 540
+            };
+          }
+          return {
+            width: window.innerWidth || 1024,
+            height: window.innerHeight || 768
+          };
+        }
+
+        _recalcBounds(initialPlace = false) {
+          this._syncCanvasResolution();
+          const rect = this._getStageRect();
+          const size = this._getEffectiveSize();
+          const margin = Number(this.config.edgeMargin) || 20;
+          const bottomOff = Number(this.config.bottomOffset) || 12;
+
+          this.minX = Math.max(4, margin);
+          this.maxX = Math.max(this.minX + 10, rect.width - size - margin);
+          this.groundY = Math.max(20, rect.height - size - bottomOff);
+
+          const isMobileWidth = rect.width <= 520;
+          if (isMobileWidth && this.config.mobileBehavior === 'desktop-only') {
+            this.hostEl.style.display = 'none';
+          } else {
+            this.hostEl.style.display = 'block';
+          }
+
+          let mode = this.config.positionMode;
+          if (isMobileWidth && this.config.mobileBehavior === 'corner-only') {
+            mode = 'corner-right';
+          }
+
+          if (mode === 'corner-left') {
+            this.roamMinX = this.minX;
+            this.roamMaxX = Math.min(this.maxX, this.minX + 110);
+          } else if (mode === 'corner-right') {
+            this.roamMaxX = this.maxX;
+            this.roamMinX = Math.max(this.minX, this.maxX - 110);
+          } else if (mode === 'custom') {
+            const targetX = Math.round((this.config.customXRatio || 0.8) * (rect.width - size));
+            const clampedX = Math.max(this.minX, Math.min(this.maxX, targetX));
+            this.roamMinX = Math.max(this.minX, clampedX - 75);
+            this.roamMaxX = Math.min(this.maxX, clampedX + 75);
+          } else {
+            this.roamMinX = this.minX;
+            this.roamMaxX = this.maxX;
+          }
+
+          if (initialPlace) {
+            if (mode === 'corner-left') {
+              this.x = this.roamMinX + 12;
+            } else if (mode === 'corner-right') {
+              this.x = this.roamMaxX - 12;
+            } else if (mode === 'custom') {
+              this.x = Math.round((this.config.customXRatio || 0.8) * (rect.width - size));
+            } else {
+              this.x = Math.round((this.roamMinX + this.roamMaxX) * 0.65);
+            }
+            this.y = this.groundY;
+          }
+
+          this.x = Math.max(this.minX, Math.min(this.maxX, this.x));
+          if (!this.isDragging && this.state !== 'jump') {
+            this.y = this.groundY;
+          }
+          this._applyTransform();
+        }
+
+        _applyTransform() {
+          this.actorEl.style.transform = `translate3d(${Math.round(this.x)}px, ${Math.round(this.y)}px, 0)`;
+        }
+
+        _bindEvents() {
+          this._boundHandlers.onPointerDown = (e) => {
+            if (e.target === this.menuTriggerBtn || this.menuEl.contains(e.target)) return;
+            this.sound.unlock();
+            this.pointerDownX = e.clientX;
+            this.pointerDownY = e.clientY;
+            this.dragStartX = this.x;
+            this.dragStartY = this.y;
+            this.hasMovedDuringPointer = false;
+            this.pettingDistance = 0;
+
+            if (this.config.enableDrag) {
+              this.isDragging = true;
+              try { this.actorEl.setPointerCapture(e.pointerId); } catch (err) {}
+            }
+          };
+
+          this._boundHandlers.onPointerMove = (e) => {
+            const dx = e.clientX - this.pointerDownX;
+            const dy = e.clientY - this.pointerDownY;
+            const dist = Math.hypot(dx, dy);
+
+            if (this.isDragging && dist > 6) {
+              this.hasMovedDuringPointer = true;
+              this.setState('drag', 10);
+              const rect = this._getStageRect();
+              const size = this._getEffectiveSize();
+              this.x = Math.max(this.minX, Math.min(this.maxX, this.dragStartX + dx));
+              this.y = Math.max(10, Math.min(this.groundY, this.dragStartY + dy));
+              this.config.customXRatio = Number((this.x / Math.max(1, rect.width - size)).toFixed(3));
+              this._applyTransform();
+              return;
+            }
+
+            // Petting detection (gentle stroke on pet body without dragging)
+            if (!this.isDragging && this.config.enablePetting && this.pettingCooldown <= 0) {
+              this.pettingDistance += Math.abs(e.movementX || 2);
+              if (this.pettingDistance > 42) {
+                this.pettingDistance = 0;
+                this.pettingCooldown = 2.0;
+                this.pettingActive = true;
+                this.setState('happy', 2.4);
+                this.sound.play('happy', this.config, true);
+                this.showBubble('好舒服喔～');
+              }
+            }
+          };
+
+          this._boundHandlers.onPointerUp = (e) => {
+            if (this.isDragging) {
+              try { this.actorEl.releasePointerCapture(e.pointerId); } catch (err) {}
+              this.isDragging = false;
+
+              if (this.hasMovedDuringPointer) {
+                // Drop naturally with gravity
+                this.vy = 0;
+                this.setState('jump', 1.2);
+                this._savePositionState();
+                if (this.options.onConfigMutate) {
+                  this.options.onConfigMutate(this.config);
+                }
+                return;
+              }
+            }
+
+            if (e.target === this.menuTriggerBtn || this.menuEl.contains(e.target)) return;
+
+            // Handle Click / Multi-Click / Double Click
+            if (this.config.enableClick) {
+              const now = performance.now();
+              if (now - this.lastClickTime < 340) {
+                this.clickCount++;
+              } else {
+                this.clickCount = 1;
+              }
+              this.lastClickTime = now;
+
+              if (this.clickCount >= 2 && this.config.enableDblClick) {
+                this.direction = -this.direction;
+                this.jump(true);
+                this.showBubble(this._pickRandomPhrase());
+              } else {
+                this.setState('happy', 2.2);
+                this.sound.play('voice', this.config, true);
+                if (Math.random() < 0.75) {
+                  this.showBubble(this._pickRandomPhrase());
+                }
+              }
+            }
+          };
+
+          this._boundHandlers.onMenuTrigger = (e) => {
+            e.stopPropagation();
+            this.toggleMenu();
+          };
+
+          this._boundHandlers.onMenuClick = (e) => {
+            e.stopPropagation();
+            const btn = e.target.closest('[data-action]');
+            if (!btn) return;
+            const action = btn.dataset.action;
+            this.toggleMenu(false);
+
+            if (action === 'pet') {
+              this.setState('happy', 2.5);
+              this.sound.play('happy', this.config, true);
+              this.showBubble('最喜歡摸摸了！');
+            } else if (action === 'callName') {
+              this.setState('react', 2.2);
+              this.sound.play('voice', this.config, true);
+              this.showBubble(`我是${this.config.name}！`);
+            } else if (action === 'sit') {
+              this.setState('sit', 5.0);
+              this.showBubble('乖乖坐好');
+            } else if (action === 'sleep') {
+              this.setState('sleep', 8.0);
+              this.showBubble('先睡一下喔');
+            } else if (action === 'callBack') {
+              this.callBackToHome();
+            } else if (action === 'hide') {
+              this.setHidden(true);
+            }
+          };
+
+          this._boundHandlers.onRecall = () => {
+            this.setHidden(false);
+            this.sound.play('wake', this.config, true);
+            this.setState('happy', 2.0);
+            this.showBubble(`${this.config.name}回來囉！`);
+          };
+
+          this._boundHandlers.onDocClick = (e) => {
+            if (!this.menuOpen) return;
+            const path = e.composedPath ? e.composedPath() : [];
+            if (!path.includes(this.menuEl) && !path.includes(this.menuTriggerBtn)) {
+              this.toggleMenu(false);
+            }
+          };
+
+          this._boundHandlers.onKeyDown = (e) => {
+            if (e.key === 'Escape' && this.menuOpen) {
+              this.toggleMenu(false);
+            }
+          };
+
+          this._boundHandlers.onResize = () => {
+            this._recalcBounds(false);
+          };
+
+          this._boundHandlers.onVisibility = () => {
+            if (!document.hidden) {
+              this._lastTs = performance.now();
+            }
+          };
+
+          this.actorEl.addEventListener('pointerdown', this._boundHandlers.onPointerDown);
+          this.actorEl.addEventListener('pointermove', this._boundHandlers.onPointerMove);
+          this.actorEl.addEventListener('pointerup', this._boundHandlers.onPointerUp);
+          this.menuTriggerBtn.addEventListener('click', this._boundHandlers.onMenuTrigger);
+          this.menuEl.addEventListener('click', this._boundHandlers.onMenuClick);
+          this.recallBtn.addEventListener('click', this._boundHandlers.onRecall);
+          document.addEventListener('pointerdown', this._boundHandlers.onDocClick);
+          document.addEventListener('keydown', this._boundHandlers.onKeyDown);
+          window.addEventListener('resize', this._boundHandlers.onResize);
+          document.addEventListener('visibilitychange', this._boundHandlers.onVisibility);
+        }
+
+        toggleMenu(forceState) {
+          this.menuOpen = typeof forceState === 'boolean' ? forceState : !this.menuOpen;
+          this.menuEl.classList.toggle('wp-open', this.menuOpen);
+          this.actorEl.classList.toggle('wp-menu-open', this.menuOpen);
+        }
+
+        setHidden(hidden) {
+          this.isHidden = Boolean(hidden);
+          this._syncVisibilityUI();
+          this._savePositionState();
+          this._notifyStateChange();
+        }
+
+        _syncVisibilityUI() {
+          this.actorEl.classList.toggle('wp-hidden', this.isHidden);
+          this.recallBtn.classList.toggle('wp-visible', this.isHidden);
+          this.recallLabel.textContent = `叫出 ${this.config.name}`;
+        }
+
+        showBubble(text, duration = 3.2) {
+          if (!this.config.enableBubble || !text) return;
+          // Strictly use textContent to escape any user HTML/JS safely
+          this.bubbleEl.textContent = String(text);
+          this.bubbleEl.classList.add('wp-visible');
+          this.bubbleTimer = duration;
+        }
+
+        _pickRandomPhrase() {
+          const list = Array.isArray(this.config.phrases) && this.config.phrases.length > 0
+            ? this.config.phrases
+            : [`我是${this.config.name}！`];
+          return list[Math.floor(Math.random() * list.length)];
+        }
+
+        jump(isUserTriggered = false) {
+          this.vy = -270;
+          this.setState('jump', 1.4);
+          this.sound.play('jump', this.config, isUserTriggered);
+        }
+
+        callBackToHome() {
+          this.setHidden(false);
+          const homeX = Math.round((this.roamMinX + this.roamMaxX) / 2);
+          this.targetX = homeX;
+          this.direction = homeX >= this.x ? 1 : -1;
+          this.setState('run', 4.5);
+          this.showBubble('馬上跑回來！');
+        }
+
+        resetPosition() {
+          this.setHidden(false);
+          this.targetX = null;
+          this._recalcBounds(true);
+          this.setState('idle', 3.0);
+        }
+
+        setState(newState, duration = 3.5) {
+          const prevState = this.state;
+          this.state = newState;
+          this.stateTimer = 0;
+          this.stateDuration = duration;
+          this.frame = 0;
+          if (prevState === 'sleep' && newState !== 'sleep') {
+            this.sound.play('wake', this.config, false);
+          }
+          this._notifyStateChange();
+        }
+
+        _notifyStateChange() {
+          if (typeof this.options.onStateChange === 'function') {
+            this.options.onStateChange(this.isHidden ? 'hide' : this.state);
+          }
+        }
+
+        _decideNextAutonomousState() {
+          if (this.config.staticMode || (this.reducedMotion && !this.config.autoBehavior)) {
+            this.setState('idle', 5.0);
+            return;
+          }
+
+          // Smooth wake up from sleep (never jump straight from sleep to sprint)
+          if (this.state === 'sleep') {
+            this.setState('sit', 2.6);
+            return;
+          }
+
+          let walkProb = (Number(this.config.walkFreq) || 65) / 100;
+          let sleepProb = (Number(this.config.sleepChance) || 25) / 100;
+          let runProb = 0.18;
+
+          if (this.config.personality === 'lazy') {
+            walkProb *= 0.55;
+            sleepProb = Math.min(0.85, sleepProb * 1.6 + 0.15);
+            runProb = 0.05;
+          } else if (this.config.personality === 'lively') {
+            walkProb = Math.min(0.95, walkProb * 1.25);
+            sleepProb *= 0.4;
+            runProb = 0.35;
+          }
+
+          if (this.menuOpen) {
+            walkProb *= 0.25;
+          }
+
+          const roll = Math.random();
+          if (roll < sleepProb * 0.45) {
+            this.setState('sleep', 6.5 + Math.random() * 5.0);
+            if (Math.random() < (this.config.bubbleFreq / 100) * 0.5) {
+              this.showBubble('先睡一下...');
+            }
+          } else if (roll < sleepProb * 0.45 + 0.22) {
+            this.setState('sit', 3.5 + Math.random() * 3.0);
+          } else if (roll < sleepProb * 0.45 + 0.22 + walkProb) {
+            if (Math.random() < 0.4) {
+              this.direction = Math.random() < 0.5 ? 1 : -1;
+            }
+            if (Math.random() < runProb) {
+              this.setState('run', 2.0 + Math.random() * 2.2);
+            } else {
+              this.setState('walk', 2.8 + Math.random() * 3.5);
+            }
+          } else {
+            const baseIdle = Number(this.config.idleTime) || 4.0;
+            this.setState('idle', baseIdle * (0.75 + Math.random() * 0.5));
+          }
+
+          // Occasional spontaneous speech bubble
+          if (this.config.enableBubble && this.bubbleCooldown <= 0) {
+            if (Math.random() < (Number(this.config.bubbleFreq) || 35) / 250) {
+              this.showBubble(this._pickRandomPhrase());
+              this.bubbleCooldown = 10;
+            }
+          }
+        }
+
+        _startLoop() {
+          this._lastTs = performance.now();
+          const step = (ts) => {
+            this._rafId = requestAnimationFrame(step);
+            if (document.hidden || this.isHidden) {
+              this._lastTs = ts;
+              return;
+            }
+            // Cap dt to prevent huge jumps after tab switching
+            const dt = Math.min(0.06, Math.max(0.001, (ts - this._lastTs) / 1000));
+            this._lastTs = ts;
+            this._update(dt);
+            this._render();
+          };
+          this._rafId = requestAnimationFrame(step);
+        }
+
+        _update(dt) {
+          this.effectTick++;
+          if (this.pettingCooldown > 0) {
+            this.pettingCooldown -= dt;
+            if (this.pettingCooldown <= 0) this.pettingActive = false;
+          }
+          if (this.bubbleCooldown > 0) this.bubbleCooldown -= dt;
+
+          if (this.bubbleTimer > 0) {
+            this.bubbleTimer -= dt;
+            if (this.bubbleTimer <= 0) {
+              this.bubbleEl.classList.remove('wp-visible');
+            }
+          }
+
+          // Natural Eye Blinking
+          this.blinkTimer += dt;
+          if (!this.blink && this.blinkTimer > 3.4) {
+            this.blink = true;
+            this.blinkTimer = 0;
+          } else if (this.blink && this.blinkTimer > 0.14) {
+            this.blink = false;
+            this.blinkTimer = 0;
+          }
+
+          // Frame advance based on state & animSpeed
+          const speedMult = Number(this.config.animSpeed) || 1.0;
+          let frameInterval = 0.35;
+          if (this.state === 'walk') frameInterval = 0.16;
+          else if (this.state === 'run') frameInterval = 0.09;
+          else if (this.state === 'happy' || this.state === 'react') frameInterval = 0.14;
+          else if (this.state === 'sleep') frameInterval = 0.65;
+
+          this.frameTimer += dt * speedMult;
+          if (this.frameTimer >= frameInterval) {
+            this.frameTimer = 0;
+            this.frame = (this.frame + 1) % 4;
+          }
+
+          if (this.isDragging) return;
+
+          // Gravity / Jump physics
+          if (this.y < this.groundY || this.vy !== 0) {
+            this.vy += 680 * dt;
+            this.y += this.vy * dt;
+            if (this.y >= this.groundY) {
+              this.y = this.groundY;
+              this.vy = 0;
+              this.sound.play('land', this.config, false);
+              if (this.state === 'jump') {
+                this.setState('idle', 2.5);
+              }
+            }
+            this._applyTransform();
+          }
+
+          // Horizontal Walk / Run movement
+          if (!this.config.staticMode && (this.state === 'walk' || this.state === 'run')) {
+            const spd = this.state === 'run'
+              ? (Number(this.config.runSpeed) || 115)
+              : (Number(this.config.walkSpeed) || 55);
+
+            this.x += this.direction * spd * dt;
+
+            // Check if walking toward a specific recall target
+            if (this.targetX !== null) {
+              if ((this.direction === 1 && this.x >= this.targetX) ||
+                  (this.direction === -1 && this.x <= this.targetX)) {
+                this.x = this.targetX;
+                this.targetX = null;
+                this.setState('happy', 2.0);
+              }
+            } else {
+              // Respect boundary & turn around smoothly
+              if (this.x <= this.roamMinX) {
+                this.x = this.roamMinX;
+                this.direction = 1;
+              } else if (this.x >= this.roamMaxX) {
+                this.x = this.roamMaxX;
+                this.direction = -1;
+              }
+            }
+            this._applyTransform();
+          }
+
+          // Autonomous State Machine Timer
+          this.stateTimer += dt;
+          if (this.config.autoBehavior && this.stateTimer >= this.stateDuration) {
+            this._decideNextAutonomousState();
+          }
+        }
+
+        _render() {
+          PixelPetArtist.draw(this.ctx, this.canvas.width, this.canvas.height, this.config, {
+            state: this.state,
+            frame: this.frame,
+            direction: this.direction,
+            blink: this.blink,
+            effectTick: this.effectTick,
+            pettingActive: this.pettingActive
+          });
+        }
+
+        updateConfig(newConfig) {
+          const prevSpecies = this.config.species;
+          Object.assign(this.config, newConfig || {});
+          this.hostEl.style.zIndex = String(Number(this.config.zIndex) || 9990);
+          this.actorEl.setAttribute('aria-label', `互動寵物 ${this.config.name}`);
+          this._recalcBounds(prevSpecies !== this.config.species);
+          this._syncVisibilityUI();
+          this._render();
+        }
+
+        destroy() {
+          if (this._rafId) cancelAnimationFrame(this._rafId);
+          this.actorEl.removeEventListener('pointerdown', this._boundHandlers.onPointerDown);
+          this.actorEl.removeEventListener('pointermove', this._boundHandlers.onPointerMove);
+          this.actorEl.removeEventListener('pointerup', this._boundHandlers.onPointerUp);
+          this.menuTriggerBtn.removeEventListener('click', this._boundHandlers.onMenuTrigger);
+          this.menuEl.removeEventListener('click', this._boundHandlers.onMenuClick);
+          this.recallBtn.removeEventListener('click', this._boundHandlers.onRecall);
+          document.removeEventListener('pointerdown', this._boundHandlers.onDocClick);
+          document.removeEventListener('keydown', this._boundHandlers.onKeyDown);
+          window.removeEventListener('resize', this._boundHandlers.onResize);
+          document.removeEventListener('visibilitychange', this._boundHandlers.onVisibility);
+          if (this.hostEl && this.hostEl.parentNode) {
+            this.hostEl.parentNode.removeChild(this.hostEl);
+          }
+        }
+      }
+
+      return {
+        DEFAULT_CONFIG,
+        PixelPetArtist,
+        WidgetPetRuntime,
+        mount: function(config, options) {
+          return new WidgetPetRuntime(config, options);
+        }
+      };
+    };
+
+    // Initialize Global WidgetPets Engine API
+    window.WidgetPets = WidgetPetsCoreFactory();
+  </script>
+
+  <!-- =========================================================================
+       CORE ARCHITECTURE PART 2: WUMETAX WORKSTATION EDITOR & EXPORT GENERATOR
+  ========================================================================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      const STORAGE_KEY_PROJECTS = 'wumetax_widgetpets_projects_v1';
+
+      // Default Preset Projects
+      const INITIAL_PROJECTS = [
+        {
+          id: 'proj-kazi-default',
+          title: '咖呲｜預設柴犬（底部自由走動）',
+          config: Object.assign({}, window.WidgetPets.DEFAULT_CONFIG)
+        },
+        {
+          id: 'proj-cat-corner',
+          title: '橘貓｜右下角慵懶模式',
+          config: Object.assign({}, window.WidgetPets.DEFAULT_CONFIG, {
+            species: 'cat',
+            name: '橘子',
+            primaryColor: '#F59E0B',
+            secondaryColor: '#FEF3C7',
+            accessory: 'blue-collar',
+            personality: 'lazy',
+            positionMode: 'corner-right',
+            phrases: ['喵～', '曬太陽好舒服', '要罐罐嗎？', '伸個懶腰～']
+          })
+        },
+        {
+          id: 'proj-rabbit-quiet',
+          title: '小兔子｜安靜陪伴模式',
+          config: Object.assign({}, window.WidgetPets.DEFAULT_CONFIG, {
+            species: 'rabbit',
+            name: '雪球',
+            primaryColor: '#F9FAFB',
+            secondaryColor: '#FCE7F3',
+            accessory: 'bandana',
+            personality: 'lively',
+            audioPolicy: 'muted',
+            phrases: ['蹦蹦跳跳！', '紅蘿蔔在哪裡？', '今天也很有精神！']
+          })
+        }
+      ];
+
+      const SPECIES_COLOR_PRESETS = {
+        shiba: [
+          { label: '經典赤柴（咖呲）', p: '#E08E36', s: '#FFF7EB' },
+          { label: '黑柴配色', p: '#292524', s: '#F5F5F4' },
+          { label: '白柴配色', p: '#F5F0E6', s: '#FFFFFF' },
+          { label: '胡麻柴配色', p: '#9A5B25', s: '#FDE68A' }
+        ],
+        cat: [
+          { label: '經典橘貓', p: '#F59E0B', s: '#FFFBEB' },
+          { label: '賓士黑貓', p: '#1F2937', s: '#F9FAFB' },
+          { label: '英短藍貓', p: '#64748B', s: '#E2E8F0' }
+        ],
+        rabbit: [
+          { label: '雪白兔', p: '#F9FAFB', s: '#FCE7F3' },
+          { label: '奶茶兔', p: '#D6A87C', s: '#FFF7ED' },
+          { label: '可可兔', p: '#78350F', s: '#FEF3C7' }
+        ]
+      };
+
+      const STATE_LABELS = {
+        idle: 'Idle (待機呼吸)',
+        walk: 'Walk (底部散步)',
+        run: 'Run (開心小跑步)',
+        sit: 'Sit (乖乖坐下)',
+        sleep: 'Sleep (打盹睡覺)',
+        jump: 'Jump (跳躍落地)',
+        happy: 'Happy (搖尾撒嬌)',
+        react: 'React (互動回應)',
+        drag: 'Drag (抱起拖曳中)',
+        hide: 'Hide (已暫時隱藏)'
+      };
+
+      let projects = [];
+      let currentProjectId = '';
+      let activeConfig = Object.assign({}, window.WidgetPets.DEFAULT_CONFIG);
+      let previewPetInstance = null;
+
+      // Toast helper
+      function showToast(msg) {
+        const el = document.getElementById('toastMsg');
+        el.textContent = msg;
+        el.classList.add('show');
+        clearTimeout(el._timer);
+        el._timer = setTimeout(() => el.classList.remove('show'), 2600);
+      }
+
+      // Render Species Thumbnails on Left Panel
+      function renderSpeciesThumbnails() {
+        const thumbs = [
+          { id: 'thumb-shiba', species: 'shiba', p: '#E08E36', s: '#FFF7EB', acc: 'red-collar' },
+          { id: 'thumb-cat', species: 'cat', p: '#F59E0B', s: '#FFFBEB', acc: 'blue-collar' },
+          { id: 'thumb-rabbit', species: 'rabbit', p: '#F9FAFB', s: '#FCE7F3', acc: 'bandana' }
+        ];
+        thumbs.forEach(item => {
+          const cvs = document.getElementById(item.id);
+          if (!cvs) return;
+          const ctx = cvs.getContext('2d');
+          window.WidgetPets.PixelPetArtist.draw(ctx, 48, 48, {
+            species: item.species,
+            primaryColor: item.p,
+            secondaryColor: item.s,
+            accessory: item.acc,
+            shadow: false
+          }, { state: 'idle', frame: 0, direction: 1, blink: false, effectTick: 0 });
+        });
+      }
+
+      // Load & Save Projects in LocalStorage
+      function loadProjectsFromStorage() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY_PROJECTS);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              projects = parsed;
+            }
+          }
+        } catch (e) {}
+        if (!projects.length) {
+          projects = JSON.parse(JSON.stringify(INITIAL_PROJECTS));
+        }
+        currentProjectId = projects[0].id;
+        activeConfig = Object.assign({}, window.WidgetPets.DEFAULT_CONFIG, projects[0].config);
+      }
+
+      function saveProjectsToStorage() {
+        try {
+          localStorage.setItem(STORAGE_KEY_PROJECTS, JSON.stringify(projects));
+        } catch (e) {}
+      }
+
+      function renderProjectSelect() {
+        const sel = document.getElementById('projectSelect');
+        sel.innerHTML = '';
+        projects.forEach(p => {
+          const opt = document.createElement('option');
+          opt.value = p.id;
+          opt.textContent = p.title;
+          if (p.id === currentProjectId) opt.selected = true;
+          sel.appendChild(opt);
+        });
+      }
+
+      // Sync UI Controls from activeConfig
+      function syncFormFromConfig() {
+        document.querySelectorAll('.species-card').forEach(card => {
+          card.classList.toggle('active', card.dataset.species === activeConfig.species);
+        });
+
+        document.getElementById('cfgPetName').value = activeConfig.name || '咖呲';
+        document.getElementById('mockHeroPetName').textContent = activeConfig.name || '咖呲';
+
+        document.getElementById('cfgSize').value = activeConfig.size;
+        document.getElementById('lblSizeVal').textContent = activeConfig.size + ' px';
+
+        document.getElementById('cfgPrimaryColor').value = activeConfig.primaryColor;
+        document.getElementById('lblPrimaryHex').textContent = activeConfig.primaryColor.toUpperCase();
+        document.getElementById('cfgSecondaryColor').value = activeConfig.secondaryColor;
+        document.getElementById('lblSecondaryHex').textContent = activeConfig.secondaryColor.toUpperCase();
+
+        document.getElementById('cfgAccessory').value = activeConfig.accessory;
+        document.getElementById('cfgShadow').checked = Boolean(activeConfig.shadow);
+
+        document.getElementById('cfgPersonality').value = activeConfig.personality;
+        document.getElementById('cfgWalkSpeed').value = activeConfig.walkSpeed;
+        document.getElementById('lblWalkSpeed').textContent = activeConfig.walkSpeed + ' px/s';
+        document.getElementById('cfgRunSpeed').value = activeConfig.runSpeed;
+        document.getElementById('lblRunSpeed').textContent = activeConfig.runSpeed + ' px/s';
+        document.getElementById('cfgIdleTime').value = activeConfig.idleTime;
+        document.getElementById('lblIdleTime').textContent = Number(activeConfig.idleTime).toFixed(1) + ' 秒';
+        document.getElementById('cfgWalkFreq').value = activeConfig.walkFreq;
+        document.getElementById('lblWalkFreq').textContent = activeConfig.walkFreq + '%';
+        document.getElementById('cfgSleepChance').value = activeConfig.sleepChance;
+        document.getElementById('lblSleepChance').textContent = activeConfig.sleepChance + '%';
+        document.getElementById('cfgAnimSpeed').value = activeConfig.animSpeed;
+        document.getElementById('lblAnimSpeed').textContent = Number(activeConfig.animSpeed).toFixed(1) + 'x';
+        document.getElementById('cfgAutoBehavior').checked = Boolean(activeConfig.autoBehavior);
+        document.getElementById('cfgStaticMode').checked = Boolean(activeConfig.staticMode);
+
+        document.getElementById('cfgPositionMode').value = activeConfig.positionMode;
+        document.getElementById('cfgBottomOffset').value = activeConfig.bottomOffset;
+        document.getElementById('lblBottomOffset').textContent = activeConfig.bottomOffset + ' px';
+        document.getElementById('cfgEdgeMargin').value = activeConfig.edgeMargin;
+        document.getElementById('lblEdgeMargin').textContent = activeConfig.edgeMargin + ' px';
+        document.getElementById('cfgZIndex').value = activeConfig.zIndex;
+        document.getElementById('cfgMobileBehavior').value = activeConfig.mobileBehavior;
+
+        document.getElementById('cfgEnableClick').checked = Boolean(activeConfig.enableClick);
+        document.getElementById('cfgEnableDrag').checked = Boolean(activeConfig.enableDrag);
+        document.getElementById('cfgEnablePetting').checked = Boolean(activeConfig.enablePetting);
+        document.getElementById('cfgEnableDblClick').checked = Boolean(activeConfig.enableDblClick);
+        document.getElementById('cfgShowQuickMenu').checked = Boolean(activeConfig.showQuickMenu);
+        document.getElementById('cfgEnableBubble').checked = Boolean(activeConfig.enableBubble);
+        document.getElementById('cfgBubbleFreq').value = activeConfig.bubbleFreq;
+        document.getElementById('lblBubbleFreq').textContent = activeConfig.bubbleFreq + '%';
+
+        document.getElementById('cfgAudioEnabled').checked = Boolean(activeConfig.audioEnabled);
+        document.getElementById('cfgAudioVolume').value = activeConfig.audioVolume;
+        document.getElementById('lblAudioVolume').textContent = activeConfig.audioVolume + '%';
+        document.getElementById('cfgAudioPolicy').value = activeConfig.audioPolicy;
+
+        renderSpeciesSwatches();
+        renderPhrasesList();
+        updateGeneratedEmbedCode();
+      }
+
+      function renderSpeciesSwatches() {
+        const wrap = document.getElementById('speciesColorPresets');
+        wrap.innerHTML = '';
+        const list = SPECIES_COLOR_PRESETS[activeConfig.species] || SPECIES_COLOR_PRESETS.shiba;
+        list.forEach(sw => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'swatch-btn';
+          btn.textContent = sw.label;
+          btn.addEventListener('click', () => {
+            activeConfig.primaryColor = sw.p;
+            activeConfig.secondaryColor = sw.s;
+            syncFormFromConfig();
+            applyConfigToPreview();
+          });
+          wrap.appendChild(btn);
+        });
+      }
+
+      function renderPhrasesList() {
+        const container = document.getElementById('phrasesList');
+        container.innerHTML = '';
+        (activeConfig.phrases || []).forEach((phrase, idx) => {
+          const row = document.createElement('div');
+          row.className = 'phrase-item';
+          const span = document.createElement('span');
+          span.className = 'phrase-text';
+          span.textContent = phrase;
+
+          const delBtn = document.createElement('button');
+          delBtn.type = 'button';
+          delBtn.className = 'btn btn-danger btn-sm';
+          delBtn.style.height = '24px';
+          delBtn.style.padding = '0 8px';
+          delBtn.textContent = '刪除';
+          delBtn.addEventListener('click', () => {
+            activeConfig.phrases.splice(idx, 1);
+            renderPhrasesList();
+            applyConfigToPreview();
+            updateGeneratedEmbedCode();
+          });
+
+          row.appendChild(span);
+          row.appendChild(delBtn);
+          container.appendChild(row);
+        });
+      }
+
+      function applyConfigToPreview() {
+        if (previewPetInstance) {
+          previewPetInstance.updateConfig(activeConfig);
+        }
+        updateGeneratedEmbedCode();
+      }
+
+      // =====================================================================
+      // EXPORT GENERATORS (100% Standalone & Self-Contained)
+      // =====================================================================
+      function buildStandaloneEngineScript() {
+        return `/* WUMETAX WidgetPets Standalone Runtime Engine | https://widgetpets.wumetax.com/ */\n` +
+               `window.WidgetPets = (${WidgetPetsCoreFactory.toString()})();\n`;
+      }
+
+      function buildSelfContainedEmbedSnippet() {
+        const serializedConfig = JSON.stringify(activeConfig);
+        return `<!-- WUMETAX WidgetPets 網站互動寵物 (${activeConfig.name}) Start -->\n` +
+               `<script>\n` +
+               `(function(){\n` +
+               `  if (window.__wumetaxWidgetPetMounted) return;\n` +
+               `  window.__wumetaxWidgetPetMounted = true;\n` +
+               `  const WidgetPets = (${WidgetPetsCoreFactory.toString()})();\n` +
+               `  const petConfig = ${serializedConfig};\n` +
+               `  function initPet() {\n` +
+               `    window.myWidgetPet = WidgetPets.mount(petConfig);\n` +
+               `  }\n` +
+               `  if (document.readyState === 'loading') {\n` +
+               `    document.addEventListener('DOMContentLoaded', initPet);\n` +
+               `  } else {\n` +
+               `    initPet();\n` +
+               `  }\n` +
+               `})();\n` +
+               `<\/script>\n` +
+               `<!-- WUMETAX WidgetPets End -->`;
+      }
+
+      function buildStandaloneDemoHtmlFile() {
+        const embedSnippet = buildSelfContainedEmbedSnippet();
+        const safeName = (activeConfig.name || '咖呲').replace(/[<>&"']/g, '');
+        return `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${safeName}｜WUMETAX WidgetPets 獨立互動預覽頁</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif; margin: 0; background: #F3F4F6; color: #111827; line-height: 1.6; }
+    header { background: #111827; color: #FFFFFF; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; }
+    main { max-width: 900px; margin: 32px auto; padding: 0 20px 120px; }
+    .card { background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 10px; padding: 24px; margin-bottom: 20px; }
+    .btn { background: #3B82F6; color: #FFFFFF; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+    .btn:hover { background: #2563EB; }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>WUMETAX WidgetPets 獨立展示頁面</strong>
+    <span>主角：${safeName}</span>
+  </header>
+  <main>
+    <div class="card">
+      <h1>您的網站互動寵物「${safeName}」已經準備就緒！</h1>
+      <p>這份 HTML 檔案完全獨立運作，不依賴任何外部圖片或伺服器。請觀察瀏覽器底部的寵物，您可以直接點擊牠、在牠身上滑動撫摸、拖曳牠到其他位置，或點擊牠右上角的「•••」開啟互動選單。</p>
+      <button class="btn" onclick="alert('網站原本的按鈕完全不受寵物遮擋或干擾！')">測試網站按鈕點擊</button>
+    </div>
+    <div class="card">
+      <h2>如何放入您自己的網站？</h2>
+      <p>您可以直接檢視本檔案底部的 <code>&lt;script&gt;</code> 區塊，將該段程式碼複製貼上至您網站的 <code>&lt;/body&gt;</code> 之前即可。</p>
+    </div>
+  </main>
+  ${embedSnippet}
+</body>
+</html>`;
+      }
+
+      function buildExternalExampleHtml() {
+        const serializedConfig = JSON.stringify(activeConfig, null, 2);
+        return `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WidgetPets 外部套件載入範例 (example.html)</title>
+</head>
+<body style="font-family: sans-serif; padding: 40px; background: #F9FAFB;">
+  <h1>WidgetPets 完整套件載入示範</h1>
+  <p>請確保 <code>widgetpets.js</code> 與本檔案放在同一個資料夾下。</p>
+
+  <script src="./widgetpets.js"><\/script>
+  <script>
+    const config = ${serializedConfig};
+    window.WidgetPets.mount(config);
+  <\/script>
+</body>
+</html>`;
+      }
+
+      function downloadBlobFile(filename, content, mimeType) {
+        const blob = new Blob([content], { type: mimeType || 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      }
+
+      function updateGeneratedEmbedCode() {
+        const box = document.getElementById('embedCodeOutput');
+        if (box) {
+          box.value = buildSelfContainedEmbedSnippet();
+        }
+      }
+
+      // =====================================================================
+      // INITIALIZE EDITOR UI & EVENT LISTENERS
+      // =====================================================================
+      function initWorkstation() {
+        renderSpeciesThumbnails();
+        loadProjectsFromStorage();
+        renderProjectSelect();
+
+        // Mount Live Preview Pet inside Simulator
+        const mountContainer = document.getElementById('simulatorPetMount');
+        previewPetInstance = window.WidgetPets.mount(activeConfig, {
+          container: mountContainer,
+          isPreview: true,
+          onStateChange: (st) => {
+            const lbl = document.getElementById('lblCurrentState');
+            if (lbl) lbl.textContent = STATE_LABELS[st] || st;
+          },
+          onConfigMutate: (mutatedCfg) => {
+            activeConfig.customXRatio = mutatedCfg.customXRatio;
+            updateGeneratedEmbedCode();
+          }
+        });
+
+        syncFormFromConfig();
+
+        // Left Config Tab Switching
+        document.querySelectorAll('.config-tab').forEach(tabBtn => {
+          tabBtn.addEventListener('click', () => {
+            const target = tabBtn.dataset.tab;
+            document.querySelectorAll('.config-tab').forEach(b => b.classList.toggle('active', b === tabBtn));
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+              pane.classList.toggle('active', pane.id === 'tab-' + target);
+            });
+          });
+        });
+
+        // Mobile RWD Workspace Switcher
+        document.querySelectorAll('.mobile-tab-btn').forEach(mBtn => {
+          mBtn.addEventListener('click', () => {
+            document.querySelectorAll('.mobile-tab-btn').forEach(b => b.classList.toggle('active', b === mBtn));
+            const view = mBtn.dataset.mobileTarget;
+            const subtab = mBtn.dataset.subtab;
+            document.getElementById('workstationGrid').setAttribute('data-mobile-view', view);
+            if (subtab) {
+              const targetTabBtn = document.querySelector(`.config-tab[data-tab="${subtab}"]`);
+              if (targetTabBtn) targetTabBtn.click();
+            }
+            if (view === 'preview' && previewPetInstance) {
+              setTimeout(() => previewPetInstance._recalcBounds(false), 60);
+            }
+          });
+        });
+
+        // Species Cards
+        document.querySelectorAll('.species-card').forEach(card => {
+          card.addEventListener('click', () => {
+            const sp = card.dataset.species;
+            activeConfig.species = sp;
+            if (sp === 'shiba' && (activeConfig.name === '橘子' || activeConfig.name === '雪球')) {
+              activeConfig.name = '咖呲';
+            } else if (sp === 'cat' && activeConfig.name === '咖呲') {
+              activeConfig.name = '橘子';
+            } else if (sp === 'rabbit' && (activeConfig.name === '咖呲' || activeConfig.name === '橘子')) {
+              activeConfig.name = '雪球';
+            }
+            const defaultSwatch = SPECIES_COLOR_PRESETS[sp][0];
+            activeConfig.primaryColor = defaultSwatch.p;
+            activeConfig.secondaryColor = defaultSwatch.s;
+            syncFormFromConfig();
+            applyConfigToPreview();
+          });
+        });
+
+        // Form Input Listeners
+        const bindInput = (id, key, transform) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.addEventListener('input', () => {
+            const val = el.type === 'checkbox' ? el.checked : (transform ? transform(el.value) : el.value);
+            activeConfig[key] = val;
+            syncFormFromConfig();
+            applyConfigToPreview();
+          });
+        };
+
+        bindInput('cfgPetName', 'name', v => v.trim() || '咖呲');
+        bindInput('cfgSize', 'size', Number);
+        bindInput('cfgPrimaryColor', 'primaryColor');
+        bindInput('cfgSecondaryColor', 'secondaryColor');
+        bindInput('cfgAccessory', 'accessory');
+        bindInput('cfgShadow', 'shadow');
+
+        // Personality preset changes actual parameters
+        document.getElementById('cfgPersonality').addEventListener('change', (e) => {
+          const p = e.target.value;
+          activeConfig.personality = p;
+          if (p === 'lazy') {
+            activeConfig.walkSpeed = 40;
+            activeConfig.walkFreq = 35;
+            activeConfig.sleepChance = 60;
+            activeConfig.idleTime = 5.5;
+          } else if (p === 'lively') {
+            activeConfig.walkSpeed = 75;
+            activeConfig.runSpeed = 140;
+            activeConfig.walkFreq = 85;
+            activeConfig.sleepChance = 10;
+            activeConfig.idleTime = 2.5;
+          } else {
+            activeConfig.walkSpeed = 55;
+            activeConfig.runSpeed = 115;
+            activeConfig.walkFreq = 65;
+            activeConfig.sleepChance = 25;
+            activeConfig.idleTime = 4.0;
+          }
+          syncFormFromConfig();
+          applyConfigToPreview();
+          showToast('已套用性格參數並更新寵物自主行為機率');
+        });
+
+        bindInput('cfgWalkSpeed', 'walkSpeed', Number);
+        bindInput('cfgRunSpeed', 'runSpeed', Number);
+        bindInput('cfgIdleTime', 'idleTime', Number);
+        bindInput('cfgWalkFreq', 'walkFreq', Number);
+        bindInput('cfgSleepChance', 'sleepChance', Number);
+        bindInput('cfgAnimSpeed', 'animSpeed', Number);
+        bindInput('cfgAutoBehavior', 'autoBehavior');
+        bindInput('cfgStaticMode', 'staticMode');
+
+        bindInput('cfgPositionMode', 'positionMode');
+        bindInput('cfgBottomOffset', 'bottomOffset', Number);
+        bindInput('cfgEdgeMargin', 'edgeMargin', Number);
+        bindInput('cfgZIndex', 'zIndex', Number);
+        bindInput('cfgMobileBehavior', 'mobileBehavior');
+
+        bindInput('cfgEnableClick', 'enableClick');
+        bindInput('cfgEnableDrag', 'enableDrag');
+        bindInput('cfgEnablePetting', 'enablePetting');
+        bindInput('cfgEnableDblClick', 'enableDblClick');
+        bindInput('cfgShowQuickMenu', 'showQuickMenu');
+        bindInput('cfgEnableBubble', 'enableBubble');
+        bindInput('cfgBubbleFreq', 'bubbleFreq', Number);
+
+        bindInput('cfgAudioEnabled', 'audioEnabled');
+        bindInput('cfgAudioVolume', 'audioVolume', Number);
+        bindInput('cfgAudioPolicy', 'audioPolicy');
+
+        // Add Speech Phrase
+        document.getElementById('btnAddPhrase').addEventListener('click', () => {
+          const inp = document.getElementById('inputNewPhrase');
+          const txt = inp.value.trim();
+          if (!txt) return;
+          activeConfig.phrases.push(txt);
+          inp.value = '';
+          renderPhrasesList();
+          applyConfigToPreview();
+          if (previewPetInstance) previewPetInstance.showBubble(txt);
+        });
+
+        // Audio Test Buttons
+        document.querySelectorAll('[data-test-sound]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (!previewPetInstance) return;
+            previewPetInstance.sound.play(btn.dataset.testSound, Object.assign({}, activeConfig, { audioEnabled: true, audioPolicy: 'interaction-only' }), true);
+          });
+        });
+
+        // Viewport Size Switcher
+        document.querySelectorAll('.vp-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.vp-btn').forEach(b => b.classList.toggle('active', b === btn));
+            const sim = document.getElementById('simulatedBrowser');
+            const w = btn.dataset.vpWidth;
+            const h = btn.dataset.vpHeight;
+            sim.style.width = w === '100%' ? '100%' : w + 'px';
+            sim.style.height = h + 'px';
+            setTimeout(() => {
+              if (previewPetInstance) previewPetInstance._recalcBounds(false);
+            }, 260);
+          });
+        });
+
+        // Mock Website Interactive Buttons (Prove Pointer Events Penetration)
+        document.querySelectorAll('.mock-interactive-trigger').forEach(trigger => {
+          trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            const msg = trigger.dataset.msg || '網站按鈕成功點擊';
+            const logEl = document.getElementById('mockSiteLog');
+            logEl.textContent = `網站互動驗證：${msg}（時間：${new Date().toLocaleTimeString()}）`;
+          });
+        });
+
+        // Right Panel Action Buttons
+        document.querySelectorAll('[data-force-state]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (!previewPetInstance) return;
+            const st = btn.dataset.forceState;
+            previewPetInstance.setHidden(false);
+            if (st === 'jump') {
+              previewPetInstance.jump(true);
+            } else {
+              previewPetInstance.setState(st, 6.0);
+              if (st === 'happy') {
+                previewPetInstance.sound.play('happy', activeConfig, true);
+                previewPetInstance.showBubble(previewPetInstance._pickRandomPhrase());
+              }
+            }
+          });
+        });
+
+        document.getElementById('btnCallBackPet').addEventListener('click', () => {
+          if (previewPetInstance) previewPetInstance.callBackToHome();
+        });
+
+        document.getElementById('btnResetPetPos').addEventListener('click', () => {
+          if (previewPetInstance) previewPetInstance.resetPosition();
+          showToast('已重設寵物位置');
+        });
+
+        document.getElementById('btnToggleHidePet').addEventListener('click', () => {
+          if (previewPetInstance) previewPetInstance.setHidden(!previewPetInstance.isHidden);
+        });
+
+        document.getElementById('btnResumeAuto').addEventListener('click', () => {
+          activeConfig.autoBehavior = true;
+          activeConfig.staticMode = false;
+          syncFormFromConfig();
+          applyConfigToPreview();
+          if (previewPetInstance) {
+            previewPetInstance.setHidden(false);
+            previewPetInstance._decideNextAutonomousState();
+          }
+          showToast('已恢復寵物自主行為狀態機');
+        });
+
+        // Project Storage Actions
+        document.getElementById('projectSelect').addEventListener('change', (e) => {
+          const found = projects.find(p => p.id === e.target.value);
+          if (!found) return;
+          currentProjectId = found.id;
+          activeConfig = Object.assign({}, window.WidgetPets.DEFAULT_CONFIG, JSON.parse(JSON.stringify(found.config)));
+          syncFormFromConfig();
+          applyConfigToPreview();
+          showToast(`已切換至「${found.title}」`);
+        });
+
+        document.getElementById('btnSaveProject').addEventListener('click', () => {
+          const idx = projects.findIndex(p => p.id === currentProjectId);
+          if (idx !== -1) {
+            projects[idx].config = JSON.parse(JSON.stringify(activeConfig));
+            saveProjectsToStorage();
+            showToast('已儲存目前寵物設定至本機 LocalStorage');
+          }
+        });
+
+        document.getElementById('btnSaveAsProject').addEventListener('click', () => {
+          const title = prompt('請輸入新寵物專案設定名稱：', `${activeConfig.name}｜自訂設定`);
+          if (!title) return;
+          const newProj = {
+            id: 'proj-' + Date.now(),
+            title: title.trim(),
+            config: JSON.parse(JSON.stringify(activeConfig))
+          };
+          projects.push(newProj);
+          currentProjectId = newProj.id;
+          saveProjectsToStorage();
+          renderProjectSelect();
+          showToast(`已另存新設定「${newProj.title}」`);
+        });
+
+        document.getElementById('btnRenameProject').addEventListener('click', () => {
+          const found = projects.find(p => p.id === currentProjectId);
+          if (!found) return;
+          const title = prompt('重新命名目前專案設定：', found.title);
+          if (!title) return;
+          found.title = title.trim();
+          saveProjectsToStorage();
+          renderProjectSelect();
+          showToast('已更新設定名稱');
+        });
+
+        document.getElementById('btnDuplicateProject').addEventListener('click', () => {
+          const found = projects.find(p => p.id === currentProjectId);
+          if (!found) return;
+          const copy = {
+            id: 'proj-' + Date.now(),
+            title: found.title + ' (複製)',
+            config: JSON.parse(JSON.stringify(activeConfig))
+          };
+          projects.push(copy);
+          currentProjectId = copy.id;
+          saveProjectsToStorage();
+          renderProjectSelect();
+          showToast('已複製目前設定');
+        });
+
+        document.getElementById('btnDeleteProject').addEventListener('click', () => {
+          if (projects.length <= 1) {
+            showToast('至少需保留一組寵物設定');
+            return;
+          }
+          const idx = projects.findIndex(p => p.id === currentProjectId);
+          if (idx !== -1) {
+            projects.splice(idx, 1);
+            currentProjectId = projects[0].id;
+            activeConfig = Object.assign({}, window.WidgetPets.DEFAULT_CONFIG, JSON.parse(JSON.stringify(projects[0].config)));
+            saveProjectsToStorage();
+            renderProjectSelect();
+            syncFormFromConfig();
+            applyConfigToPreview();
+            showToast('已刪除該組設定');
+          }
+        });
+
+        document.getElementById('btnResetDefaults').addEventListener('click', () => {
+          activeConfig = Object.assign({}, window.WidgetPets.DEFAULT_CONFIG);
+          syncFormFromConfig();
+          applyConfigToPreview();
+          if (previewPetInstance) previewPetInstance.resetPosition();
+          showToast('已還原為預設柴犬「咖呲」設定');
+        });
+
+        // JSON Export / Import with Strict Schema Validation
+        document.getElementById('btnExportJson').addEventListener('click', () => {
+          const payload = {
+            app: 'WUMETAX WidgetPets',
+            version: '1.0.0',
+            exportedAt: new Date().toISOString(),
+            config: activeConfig
+          };
+          downloadBlobFile(`widgetpet-${activeConfig.species}.json`, JSON.stringify(payload, null, 2), 'application/json');
+          showToast('已匯出寵物設定 JSON');
+        });
+
+        document.getElementById('inputImportJson').addEventListener('change', (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = () => {
+            try {
+              const parsed = JSON.parse(String(reader.result));
+              const rawCfg = (parsed && typeof parsed === 'object' && parsed.config) ? parsed.config : parsed;
+              if (!rawCfg || typeof rawCfg !== 'object') {
+                throw new Error('無效的 JSON 結構');
+              }
+              const validSpecies = ['shiba', 'cat', 'rabbit'];
+              const sanitized = Object.assign({}, window.WidgetPets.DEFAULT_CONFIG);
+              if (validSpecies.includes(rawCfg.species)) sanitized.species = rawCfg.species;
+              if (typeof rawCfg.name === 'string') sanitized.name = rawCfg.name.slice(0, 20);
+              if (typeof rawCfg.size === 'number') sanitized.size = Math.min(144, Math.max(64, rawCfg.size));
+              if (typeof rawCfg.primaryColor === 'string' && /^#[0-9A-Fa-f]{6}$/.test(rawCfg.primaryColor)) {
+                sanitized.primaryColor = rawCfg.primaryColor;
+              }
+              if (typeof rawCfg.secondaryColor === 'string' && /^#[0-9A-Fa-f]{6}$/.test(rawCfg.secondaryColor)) {
+                sanitized.secondaryColor = rawCfg.secondaryColor;
+              }
+              if (Array.isArray(rawCfg.phrases)) {
+                sanitized.phrases = rawCfg.phrases.map(s => String(s).slice(0, 40)).slice(0, 20);
+              }
+              activeConfig = sanitized;
+              syncFormFromConfig();
+              applyConfigToPreview();
+              showToast('成功驗證並匯入 JSON 設定檔');
+            } catch (err) {
+              showToast('匯入失敗：JSON 檔案格式不正確');
+            }
+            e.target.value = '';
+          };
+          reader.readAsText(file);
+        });
+
+        // Export Deliverable Buttons
+        document.getElementById('btnDownloadStandaloneHtml').addEventListener('click', () => {
+          const htmlContent = buildStandaloneDemoHtmlFile();
+          downloadBlobFile(`widgetpets-${activeConfig.species}-standalone.html`, htmlContent, 'text/html;charset=utf-8');
+          showToast('已下載可獨立執行的 HTML 預覽檔');
+        });
+
+        document.getElementById('btnGenerateEmbed').addEventListener('click', () => {
+          updateGeneratedEmbedCode();
+          showToast('已產生最新自包含網站嵌入碼');
+        });
+
+        document.getElementById('btnCopyEmbed').addEventListener('click', () => {
+          updateGeneratedEmbedCode();
+          const box = document.getElementById('embedCodeOutput');
+          navigator.clipboard.writeText(box.value).then(() => {
+            showToast('已複製網站嵌入程式碼到剪貼簿！');
+          }).catch(() => {
+            box.select();
+            document.execCommand('copy');
+            showToast('已複製網站嵌入程式碼！');
+          });
+        });
+
+        document.getElementById('btnDownloadEmbedTxt').addEventListener('click', () => {
+          updateGeneratedEmbedCode();
+          downloadBlobFile('widgetpets-embed-code.txt', buildSelfContainedEmbedSnippet(), 'text/plain;charset=utf-8');
+          showToast('已下載嵌入碼文字檔 (.txt)');
+        });
+
+        document.getElementById('btnDownloadEngineJs').addEventListener('click', () => {
+          downloadBlobFile('widgetpets.js', buildStandaloneEngineScript(), 'application/javascript;charset=utf-8');
+          showToast('已下載獨立執行核心 widgetpets.js');
+        });
+
+        document.getElementById('btnDownloadConfigJson').addEventListener('click', () => {
+          downloadBlobFile('config.json', JSON.stringify(activeConfig, null, 2), 'application/json;charset=utf-8');
+          showToast('已下載寵物設定檔 config.json');
+        });
+
+        document.getElementById('btnDownloadExampleHtml').addEventListener('click', () => {
+          downloadBlobFile('example.html', buildExternalExampleHtml(), 'text/html;charset=utf-8');
+          showToast('已下載外部載入範例頁 example.html');
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initWorkstation);
+      } else {
+        initWorkstation();
+      }
+    })();
+  </script>
+</body>
+</html>
