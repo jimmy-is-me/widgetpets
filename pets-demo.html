@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WidgetPets Extra Demo</title>
+<style>body{font-family:sans-serif;background:#FFF9F0;margin:0;padding:20px;color:#2B1D12}
+.stage{position:relative;height:140px;margin:16px 0;border:2px solid #D9C3A3;border-radius:10px;background:linear-gradient(#BEE7FF 0 70%,#8BD36B 70%);overflow:hidden}
+button{height:34px;padding:0 12px;margin:2px;border:1px solid #D9C3A3;border-radius:6px;background:#fff;cursor:pointer}</style></head>
+<body><h1>pets-extra.js 測試頁</h1>
+<p>點擊寵物可跳躍，也可用按鈕切換狀態。上方黑貓，下方柯基。</p>
+<div id="a" class="stage"></div><div id="b" class="stage"></div>
+<div id="btns"></div>
+<script src="pets-extra.js"></script>
+<script>
+var pa=WidgetPetsExtra.mount(document.getElementById('a'),'blackcat',{scale:7});
+var pb=WidgetPetsExtra.mount(document.getElementById('b'),'corgi',{scale:7});
+['idle','walk','yawn','sleep','jump'].forEach(function(s){
+  var b=document.createElement('button');b.textContent=s;
+  b.onclick=function(){pa.setState(s);pb.setState(s);};
+  document.getElementById('btns').appendChild(b);
+});
+</script></body></html>
